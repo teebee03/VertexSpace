@@ -13,6 +13,5 @@ public class MainSpace
 			//System.out.println(lune.get(i).getRel());
 			System.out.println(rc.getBody(lune.get(i).getRel(), false).getEnglishName());
 		}
-		System.out.println("fork test");
 	}
 }
