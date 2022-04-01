@@ -14,5 +14,6 @@ public class MainSpace
 			System.out.println(rc.getBody(lune.get(i).getRel(), false).getEnglishName());
 		}
 		System.out.println(rc.getBody("terre",true).getDensity());
+		System.out.println(rc.getBody("terre",true).getAvgTemp());
 	}
 }
