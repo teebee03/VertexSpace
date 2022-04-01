@@ -15,7 +15,7 @@ public class apiCommunicator
 {
 	public apiCommunicator(){}
 	
-	public Body getBody(String body,boolean isPlanet)
+	public Body makeBody(String body,boolean isPlanet)
 	{
 		String xml="";
 		String url="";
@@ -42,7 +42,7 @@ public class apiCommunicator
 			}
 			else 
 			{
-				System.out.println("cordialita");
+				System.out.println("Error 200 not ok");
 			}
 			JSONObject json = new JSONObject(responseString);
 			xml = XML.toString(json);
@@ -59,7 +59,7 @@ public class apiCommunicator
 		}
 		catch (Exception e) 
 		{
-			System.out.println("cordialita");
+			System.out.println("Error");
 			e.printStackTrace();
 		}
 		return bod;
