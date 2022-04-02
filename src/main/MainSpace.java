@@ -1,22 +1,19 @@
-import java.util.List;
-
-/*import control.GestoreEventi;
-import model.Biblioteca;*/
+package main;
+import control.GestoreEventi;
+import model.ApiCommunicator;
 import view.Finestra;
 
 public class MainSpace
 {
 	public static void main(String[] args)throws Exception
 	{
-		
-		apiCommunicator rc = new apiCommunicator();
-		//Finestra f=new Finestra();
-		/*Biblioteca b=new Biblioteca();
-		GestoreEventi gest=new GestoreEventi(f,b);*/
+		Finestra f=new Finestra();
+		ApiCommunicator api=new ApiCommunicator();
+		GestoreEventi gest=new GestoreEventi(f,api);
 		
 		
 		
-		System.out.println(rc.makeBody("terre",true).getEnglishName());
+		/*System.out.println(rc.makeBody("terre",true).getEnglishName());
 		List<Body.Moons> lune = rc.makeBody("mars",true).getMoons();
 		for (int i = 0; i < lune.size(); i++) 
 		{
@@ -24,6 +21,6 @@ public class MainSpace
 			System.out.println(rc.makeBody(lune.get(i).getRel(), false).getEnglishName());
 		}
 		System.out.println(rc.makeBody("terre",true).getDensity());
-		System.out.println(rc.makeBody("terre",true).getBodyType());
+		System.out.println(rc.makeBody("terre",true).getBodyType());*/
 	}
 }

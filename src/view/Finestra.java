@@ -23,13 +23,21 @@ public class Finestra extends JFrame {
 	 */
 	public Finestra() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(1150,880);
+		this.setSize(1180,900);
 		this.setLocationRelativeTo(null); //centro schermo
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(null);
+		/*************
+		//BodiesSelection bs = new BodiesSelection();
+		//bs.setBounds(0, 0, 1170, 860);
+		//contentPane.add(bs);*///////////////// PROVE DI VISIONE PANNELLO
+		
+		BodyDesc bd = new BodyDesc();
+		bd.setBounds(0, 0, 1170, 860);
+		contentPane.add(bd);
 
 		setVisible(true);
 	}

@@ -1,3 +1,4 @@
+package model;
 import java.io.File;
 import java.io.FileWriter;
 import java.net.URI;
@@ -11,9 +12,9 @@ import javax.xml.bind.Unmarshaller;
 import org.json.JSONObject;
 import org.json.XML;
  
-public class apiCommunicator 
+public class ApiCommunicator 
 {
-	public apiCommunicator(){}
+	public ApiCommunicator(){}
 	
 	public Body makeBody(String body,boolean isPlanet)
 	{
