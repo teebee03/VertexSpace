@@ -2,46 +2,122 @@ package view;
 
 import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import javax.swing.JButton;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.BorderLayout;
 
 public class BodiesSelection extends JPanel {
 
+	private JPanel gridPanel;
+	private JButton btnPlanets;
+	private JButton btnMoons;
+	private JButton btnDwarfPlanets;
+	private JButton btnAsteroids;
+	private JButton btnComets;
+	private JButton btnStars;
+	
+	
 	/**
 	 * Create the panel.
 	 */
 	public BodiesSelection() {
-		setBackground(Color.RED);
-		setBounds(0, 0, 1170, 860);
+		setBackground(Color.BLACK);
+		setBounds(0, 0, 1170, 861);
 		setLayout(null);
 		
-		JPanel gridPanel = new JPanel();
-		gridPanel.setBounds(230, 128, 700, 601);
+		gridPanel = new JPanel();
+		gridPanel.setBackground(Color.ORANGE);
+		gridPanel.setBounds(230, 128, 700, 600);
 		add(gridPanel);
-		gridPanel.setLayout(new GridLayout(0, 2, 200, 70));
+		gridPanel.setLayout(new GridLayout(0, 2, 200, 80));
 		
-		JButton btnPlanets = new JButton("Planets");
+		btnPlanets = new JButton("Planets");
 		gridPanel.add(btnPlanets);
 		
-		JButton btnMoons = new JButton("Moons");
+		btnMoons = new JButton("Moons");
 		gridPanel.add(btnMoons);
 		
-		JButton btnDwarfPlanets = new JButton("Dwarf Planets");
+		btnDwarfPlanets = new JButton("Dwarf Planets");
 		gridPanel.add(btnDwarfPlanets);
 		
-		JButton btnAsteroids = new JButton("Asteroids");
+		btnAsteroids = new JButton("Asteroids");
 		gridPanel.add(btnAsteroids);
 		
-		JButton btnComets = new JButton("Comets");
+		btnComets = new JButton("Comets");
 		gridPanel.add(btnComets);
 		
-		JButton btnStars = new JButton("Stars");
+		btnStars = new JButton("Stars");
 		gridPanel.add(btnStars);
 	}
+
+
+	public JPanel getGridPanel() {
+		return gridPanel;
+	}
+
+
+	public void setGridPanel(JPanel gridPanel) {
+		this.gridPanel = gridPanel;
+	}
+
+
+	public JButton getBtnPlanets() {
+		return btnPlanets;
+	}
+
+
+	public void setBtnPlanets(JButton btnPlanets) {
+		this.btnPlanets = btnPlanets;
+	}
+
+
+	public JButton getBtnMoons() {
+		return btnMoons;
+	}
+
+
+	public void setBtnMoons(JButton btnMoons) {
+		this.btnMoons = btnMoons;
+	}
+
+
+	public JButton getBtnDwarfPlanets() {
+		return btnDwarfPlanets;
+	}
+
+
+	public void setBtnDwarfPlanets(JButton btnDwarfPlanets) {
+		this.btnDwarfPlanets = btnDwarfPlanets;
+	}
+
+
+	public JButton getBtnAsteroids() {
+		return btnAsteroids;
+	}
+
+
+	public void setBtnAsteroids(JButton btnAsteroids) {
+		this.btnAsteroids = btnAsteroids;
+	}
+
+
+	public JButton getBtnComets() {
+		return btnComets;
+	}
+
+
+	public void setBtnComets(JButton btnComets) {
+		this.btnComets = btnComets;
+	}
+
+
+	public JButton getBtnStars() {
+		return btnStars;
+	}
+
+
+	public void setBtnStars(JButton btnStars) {
+		this.btnStars = btnStars;
+	}
+	
 
 }

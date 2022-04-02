@@ -11,25 +11,45 @@ import javax.swing.JScrollPane;
 
 public class BodyDesc extends JPanel {
 	private JTable tableBodyDesc;
-
+	private JLabel lblImage;
+	private JScrollPane scrollPane;
 	/**
 	 * Create the panel.
 	 */
 	public BodyDesc()
 	{
 		setBackground(Color.RED);
-		setBounds(0, 0, 1170, 860);
+		setBounds(0, 0, 1170, 861);
 		setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel lblImage = new JLabel("There will be the image of Body");
+		lblImage = new JLabel("There will be the image of Body");
 		lblImage.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblImage);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		add(scrollPane);
 		
 		tableBodyDesc = new JTable();
 		scrollPane.setViewportView(tableBodyDesc);
 	}
+	public JTable getTableBodyDesc() {
+		return tableBodyDesc;
+	}
+	public void setTableBodyDesc(JTable tableBodyDesc) {
+		this.tableBodyDesc = tableBodyDesc;
+	}
+	public JLabel getLblImage() {
+		return lblImage;
+	}
+	public void setLblImage(JLabel lblImage) {
+		this.lblImage = lblImage;
+	}
+	public JScrollPane getScrollPane() {
+		return scrollPane;
+	}
+	public void setScrollPane(JScrollPane scrollPane) {
+		this.scrollPane = scrollPane;
+	}
 
+	
 }

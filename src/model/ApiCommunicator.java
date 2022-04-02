@@ -5,10 +5,12 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
  
@@ -16,23 +18,16 @@ public class ApiCommunicator
 {
 	public ApiCommunicator(){}
 	
-	public Body makeBody(String body,boolean isPlanet)
+	public Bodroot makeBodies(String urlB)
 	{
 		String xml="";
-		String url="";
-		if (isPlanet) 
-		{
-			url = "https://api.le-systeme-solaire.net/rest/bodies/"+body;
-		}
-		else 
-		{
-			url=body;
-		}
+		String urlA="https://api.le-systeme-solaire.net/rest/bodies/";
+		urlA+=urlB;
 		
-		Body bod = new Body();
+		Bodroot bod = new Bodroot();
 		try 
 		{
-			HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url)).header("accept", "application/json").build();
+			HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(urlA)).header("accept", "application/json").build();
 			HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
 			HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 			
@@ -47,14 +42,17 @@ public class ApiCommunicator
 			}
 			JSONObject json = new JSONObject(responseString);
 			xml = XML.toString(json);
-			xml = String.join("", "<body>", xml, "</body>");
+			if(urlB.charAt(0)!='?')
+				xml = String.join("", "<bodroot><bodies>", xml, "</bodies></bodroot>");
+			else
+				xml = String.join("", "<bodroot>", xml, "</bodroot>");
 			File f = new File("body.xml");
 			FileWriter fo = new FileWriter(f);
 			fo.write(xml);
 			fo.close();
-			JAXBContext context = JAXBContext.newInstance(Body.class);
+			JAXBContext context = JAXBContext.newInstance(Bodroot.class);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
-			bod = (Body) unmarshaller.unmarshal(f);
+			bod = (Bodroot) unmarshaller.unmarshal(f);
 			f.delete();
 			
 		}

@@ -12,9 +12,10 @@ public class MainSpace
 		GestoreEventi gest=new GestoreEventi(f,api);
 		
 		
-		
+		//ApiCommunicator rc=new ApiCommunicator();
+		//System.out.println(rc.makeBodies("?data=englishName").getBodies().get(0).getEnglishName());
 		/*System.out.println(rc.makeBody("terre",true).getEnglishName());
-		List<Body.Moons> lune = rc.makeBody("mars",true).getMoons();
+		Bodies.Body.Moons lune = rc.makeBody("mars",true).getMoons();
 		for (int i = 0; i < lune.size(); i++) 
 		{
 			System.out.println(lune.get(i).getRel());
