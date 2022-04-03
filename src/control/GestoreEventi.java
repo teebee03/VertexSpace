@@ -26,23 +26,24 @@ public class GestoreEventi implements ActionListener
 		f.getPs().getBtnRight().addActionListener(this);
 		f.getPs().getBtnBack().addActionListener(this);
 		f.getPs().getBtnPlanet().addActionListener(this);
+		f.getBd().getBtnBack().addActionListener(this);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		String urlB="?filter[]=isPlanet,eq,true&data=englishName&order=aphelion";
+		String urlB="?filter[]=isPlanet,eq,true&order=aphelion";
 		Bodroot planets=api.makeBodies(urlB);
 		
-		//BodiesSelection
-		if(e.getSource()==f.getBs().getBtnPlanets())
+		/***BodiesSelection***/
+		if(e.getSource()==f.getBs().getBtnPlanets()) //da Bs a Ps
 		{
 			f.getBs().setVisible(false);
 			ButtonImageText(planets,currI);
 			f.getPs().setVisible(true);
 		}
 		
-		//PlanetSelection
+		/***PlanetSelection***/
 		if(e.getSource()==f.getPs().getBtnRight())
 		{
 			if(currI<planets.getBodies().size()-1)
@@ -71,24 +72,29 @@ public class GestoreEventi implements ActionListener
 			}
 		}
 		
-		if(e.getSource()==f.getPs().getBtnBack())
+		if(e.getSource()==f.getPs().getBtnBack()) //da Ps a Bs
 		{
 			f.getPs().setVisible(false);
 			currI=0;
 			f.getBs().setVisible(true);
 		}
 		
-		if(e.getSource()==f.getPs().getBtnPlanet())
+		if(e.getSource()==f.getPs().getBtnPlanet()) //da Ps a Bd
 		{
 			f.getPs().setVisible(false);
+			Bodroot.Bodies currPlanetName=planets.getBodies().get(currI);
+			URL imageUrl=ClassLoader.getSystemResource("images/planets/"+currPlanetName.getEnglishName()+".png");
+			Icon icon = new ImageIcon(imageUrl);
+			f.getBd().getLblBodyImage().setIcon(icon);
+			Bodroot body=api.makeBodies(currPlanetName.getId());
+			f.getBd().getTableBodyDesc().setModel(body.printBodyTable());
 			f.getBd().setVisible(true);
 		}		
 		
-		//BodyDesc
+		/***BodyDesc***/
 		if(e.getSource()==f.getBd().getBtnBack()) //ci vorra' un if per stabilire se tornare su Ps o MlP
 		{
 			f.getBd().setVisible(false);
-			currI=0;
 			f.getPs().setVisible(true);
 		}
 	}

@@ -9,8 +9,11 @@
 package model;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -21,6 +24,13 @@ import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import model.Bodroot.Bodies.AroundPlanet;
+import model.Bodroot.Bodies.Mass;
+import model.Bodroot.Bodies.Moons;
+import model.Bodroot.Bodies.Vol;
+
+
 
 
 /**
@@ -180,6 +190,71 @@ public class Bodroot {
         return this.bodies;
     }
 
+    public DefaultTableModel printBodyTable()
+	{
+		DefaultTableModel model=new DefaultTableModel();
+		model.addColumn("Data");
+		model.addColumn("Value");
+		
+		Field[] fields = Bodroot.Bodies.class.getDeclaredFields();
+		String firstCap="";
+		String field="";
+		String value="";
+		for(int i=0;i<fields.length-4;i++)
+		{
+			try
+			{
+				firstCap = fields[i].getName().substring(0, 1).toUpperCase()+fields[i].getName().substring(1);
+				firstCap = firstCap.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2");
+				field = firstCap+":";
+				if(fields[i].get(bodies.get(0)).getClass() != String.class
+						&& !(fields[i].get(bodies.get(0)) instanceof Number)
+				)
+				{
+					if(fields[i].get(bodies.get(0)).getClass() == AroundPlanet.class)
+					{
+						if(((AroundPlanet)fields[i].get(bodies.get(0))).getContent().size() != 1)
+							value = ""+((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
+					}
+					else if(fields[i].get(bodies.get(0)).getClass() == Mass.class)
+					{
+						if(((Mass)fields[i].get(bodies.get(0))).getContent().size() != 1)
+						{
+							value = ""+((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(1)).getValue()
+									+" x 10^"
+									+ ((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
+						}
+					}
+					else if(fields[i].get(bodies.get(0)).getClass() == Vol.class)
+					{
+						if(((Vol)fields[i].get(bodies.get(0))).getContent().size() != 1)
+						{
+							value = ""+((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(0)).getValue()
+									+" x 10^"
+									+ ((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(1)).getValue();
+						}
+					}
+					/*else if(fields[i].get(bodies.get(0)).getClass() == Moons.class)
+					{
+						if(((Moons)fields[i].get(bodies.get(0))).getContent().size() != 1)
+						{
+							System.out.println((JAXBElement)((Moons)fields[i].get(bodies.get(0))).getContent());
+							//value = ""+((JAXBElement)((Moons)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
+						}
+					}*/ //metodo da correggere
+				}
+				else
+					value = ""+fields[i].get(bodies.get(0));
+				model.addRow(new String[]{field,value});
+			}
+			catch (IllegalArgumentException | IllegalAccessException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return model;
+	}
 
     /**
      * <p>Classe Java per anonymous complex type.
@@ -327,55 +402,54 @@ public class Bodroot {
         "vol"
     })
     public static class Bodies {
-
-        @XmlElement(required = true)
-        protected String alternativeName;
-        protected long aphelion;
-        protected float argPeriapsis;
-        @XmlElement(required = true)
-        protected Bodroot.Bodies.AroundPlanet aroundPlanet;
-        protected short avgTemp;
-        protected float axialTilt;
-        @XmlElement(required = true)
-        protected String bodyType;
+    	@XmlElement(required = true)
+        protected String englishName;
+    	@XmlElement(required = true)
+        protected Bodroot.Bodies.Moons moons;
+    	protected long semimajorAxis;
+    	protected long perihelion;
+    	protected long aphelion;
+    	protected float eccentricity;
+    	protected float inclination;
+    	@XmlElement(required = true)
+        protected Bodroot.Bodies.Mass mass;
+    	@XmlElement(required = true)
+        protected Bodroot.Bodies.Vol vol;
         protected float density;
+        protected float gravity;
+        protected float escape;
+        protected float meanRadius;
+        protected float equaRadius;
+        protected float polarRadius;
+        protected float flattening; 
         @XmlElement(required = true)
         protected String dimension;
+        protected float sideralOrbit;
+        protected float sideralRotation;
+        @XmlElement(required = true)
+        protected Bodroot.Bodies.AroundPlanet aroundPlanet;
         @XmlElement(required = true)
         protected String discoveredBy;
         @XmlElement(required = true)
         protected String discoveryDate;
-        protected float eccentricity;
         @XmlElement(required = true)
-        protected String englishName;
-        protected float equaRadius;
-        protected float escape;
-        protected float flattening;
-        protected float gravity;
+        protected String alternativeName; 
+        protected float axialTilt;
+        protected short avgTemp;
+        protected float mainAnomaly;
+        protected float argPeriapsis;
+        protected float longAscNode;
+        @XmlElement(required = true)
+        protected String bodyType;        
+
         @XmlElement(required = true)
         protected String id;
-        protected float inclination;
-        @XmlElement(required = true)
-        protected String isPlanet;
-        protected float longAscNode;
-        protected float mainAnomaly;
-        @XmlElement(required = true)
-        protected Bodroot.Bodies.Mass mass;
-        protected float meanRadius;
-        @XmlElement(required = true)
-        protected Bodroot.Bodies.Moons moons;
         @XmlElement(required = true)
         protected String name;
-        protected long perihelion;
-        protected float polarRadius;
+        @XmlElement(required = true)
+        protected String isPlanet;
         @XmlElement(required = true)
         protected String rel;
-        protected long semimajorAxis;
-        protected float sideralOrbit;
-        protected float sideralRotation;
-        @XmlElement(required = true)
-        protected Bodroot.Bodies.Vol vol;
-
         /**
          * Recupera il valore della proprietà alternativeName.
          * 
@@ -1045,8 +1119,8 @@ public class Bodroot {
         public static class AroundPlanet {
 
             @XmlElementRefs({
-                @XmlElementRef(name = "rel", type = JAXBElement.class, required = false),
-                @XmlElementRef(name = "planet", type = JAXBElement.class, required = false)
+            	@XmlElementRef(name = "planet", type = JAXBElement.class, required = false),
+                @XmlElementRef(name = "rel", type = JAXBElement.class, required = false)
             })
             @XmlMixed
             protected List<Serializable> content;
@@ -1139,8 +1213,9 @@ public class Bodroot {
         public static class Mass {
 
             @XmlElementRefs({
-                @XmlElementRef(name = "massExponent", type = JAXBElement.class, required = false),
-                @XmlElementRef(name = "massValue", type = JAXBElement.class, required = false)
+            	@XmlElementRef(name = "massExponent", type = JAXBElement.class, required = false),
+            	@XmlElementRef(name = "massValue", type = JAXBElement.class, required = false)
+                
             })
             @XmlMixed
             protected List<Serializable> content;

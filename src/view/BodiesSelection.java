@@ -31,7 +31,6 @@ public class BodiesSelection extends JPanel {
 		URL imageUrlBg=ClassLoader.getSystemResource("images/spaceBg.jpg");
 		img=Toolkit.getDefaultToolkit().createImage(imageUrlBg);
 		this.loadImage(img);
-		setBackground(Color.BLACK);
 		setBounds(0, 0, 1170, 861);
 		setLayout(null);
 		

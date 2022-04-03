@@ -1,6 +1,11 @@
 package main;
+import java.io.Serializable;
+
+import javax.xml.bind.JAXBElement;
+
 import control.GestoreEventi;
 import model.ApiCommunicator;
+import model.Bodroot;
 import view.Finestra;
 
 public class MainSpace
@@ -12,8 +17,9 @@ public class MainSpace
 		GestoreEventi gest=new GestoreEventi(f,api);
 		
 		
-		/*ApiCommunicator rc=new ApiCommunicator();
-		System.out.println(rc.makeBodies("?data=englishName").getBodies().get(0).getEnglishName());*/
+		//ApiCommunicator rc=new ApiCommunicator();
+		//System.out.println((rc.makeBodies("mars").getBodies().get(0).getAroundPlanet().getContent().get(0))); //null
+		//System.out.println(((JAXBElement)rc.makeBodies("mars").getBodies().get(0).getMass().getContent().get(0)).getValue()); //val
 		/*System.out.println(rc.makeBody("terre",true).getEnglishName());
 		Bodies.Body.Moons lune = rc.makeBody("mars",true).getMoons();
 		for (int i = 0; i < lune.size(); i++) 

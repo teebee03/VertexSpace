@@ -59,7 +59,7 @@ public class Finestra extends JFrame implements WindowListener {
 		ps.setVisible(false);
 		contentPane.add(ps);
 		
-		bd=new BodyDesc();
+		bd=new BodyDesc(null);
 		bd.setBounds(0, 0, 1170, 861);
 		bd.setVisible(false);
 		contentPane.add(bd);

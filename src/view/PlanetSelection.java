@@ -38,12 +38,10 @@ public class PlanetSelection extends JPanel {
 		URL imageUrlBg=ClassLoader.getSystemResource("images/spaceBg.jpg");
 		img=Toolkit.getDefaultToolkit().createImage(imageUrlBg);
 		this.loadImage(img);
-		setBackground(Color.BLACK);
 		setBounds(0, 0, 1170, 861);
 		setLayout(null);
 		
 		btnPlanet = new JButton();
-		btnPlanet.setFont(new Font("Tahoma", Font.BOLD, 39));
 		if(planets!=null)
 		{
 			btnPlanet.setText(planets.getBodies().get(0).getEnglishName());
@@ -51,6 +49,7 @@ public class PlanetSelection extends JPanel {
 			Icon icon = new ImageIcon(imageUrl);
 			btnPlanet.setIcon(icon);
 		}
+		btnPlanet.setFont(new Font("Tahoma", Font.BOLD, 39));
 		btnPlanet.setForeground(Color.ORANGE);
 		btnPlanet.setBackground(Color.BLACK);
 		btnPlanet.setHorizontalTextPosition(JButton.CENTER);
