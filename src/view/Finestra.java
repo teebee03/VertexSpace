@@ -19,12 +19,18 @@ public class Finestra extends JFrame implements WindowListener {
 	private BodyDesc bd;
 	private MoonsListPanel ml;
 
+	
+
+
+
 	/**
 	 * Create the frame.
 	 * @throws InterruptedException 
 	 * @throws IOException 
 	 */
 	public Finestra() throws InterruptedException, IOException {
+		
+		
 		setTitle("Vertex Space");
 		setResizable(false);
 		addWindowListener(this);
@@ -53,7 +59,11 @@ public class Finestra extends JFrame implements WindowListener {
 		ps.setVisible(false);
 		contentPane.add(ps);
 		
-		bd=null;
+		bd=new BodyDesc();
+		bd.setBounds(0, 0, 1170, 861);
+		bd.setVisible(false);
+		contentPane.add(bd);
+		
 		ml=null;
 		
 		setVisible(true);
@@ -118,8 +128,6 @@ public class Finestra extends JFrame implements WindowListener {
 	public void setMl(MoonsListPanel ml) {
 		this.ml = ml;
 	}
-
-
 
 	@Override
 	public void windowOpened(WindowEvent e) {

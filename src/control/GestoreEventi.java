@@ -16,6 +16,7 @@ public class GestoreEventi implements ActionListener
 	private Finestra f;
 	private ApiCommunicator api;
 	private static int currI=0;
+	
 	public GestoreEventi(Finestra f,ApiCommunicator api)
 	{
 		this.f=f;
@@ -23,6 +24,8 @@ public class GestoreEventi implements ActionListener
 		f.getBs().getBtnPlanets().addActionListener(this);
 		f.getPs().getBtnLeft().addActionListener(this);
 		f.getPs().getBtnRight().addActionListener(this);
+		f.getPs().getBtnBack().addActionListener(this);
+		f.getPs().getBtnPlanet().addActionListener(this);
 	}
 	
 	@Override
@@ -31,21 +34,26 @@ public class GestoreEventi implements ActionListener
 		String urlB="?filter[]=isPlanet,eq,true&data=englishName&order=aphelion";
 		Bodroot planets=api.makeBodies(urlB);
 		
+		//BodiesSelection
 		if(e.getSource()==f.getBs().getBtnPlanets())
 		{
 			f.getBs().setVisible(false);
-			f.getPs().getBtnPlanet().setIcon(chooseIcon(planets,currI));
-			f.getPs().getBtnPlanet().setText(planets.getBodies().get(currI).getEnglishName());
+			ButtonImageText(planets,currI);
 			f.getPs().setVisible(true);
 		}
 		
+		//PlanetSelection
 		if(e.getSource()==f.getPs().getBtnRight())
 		{
 			if(currI<planets.getBodies().size()-1)
 			{
 				currI++;
-				f.getPs().getBtnPlanet().setIcon(chooseIcon(planets,currI));
-				f.getPs().getBtnPlanet().setText(planets.getBodies().get(currI).getEnglishName());
+				ButtonImageText(planets,currI);
+			}
+			else
+			{
+				currI=0;
+				ButtonImageText(planets,currI);
 			}
 		}
 		
@@ -54,17 +62,43 @@ public class GestoreEventi implements ActionListener
 			if(currI>0)
 			{
 				currI--;
-				f.getPs().getBtnPlanet().setIcon(chooseIcon(planets,currI));
-				f.getPs().getBtnPlanet().setText(planets.getBodies().get(currI).getEnglishName());
+				ButtonImageText(planets,currI);
 			}
+			else
+			{
+				currI=planets.getBodies().size()-1;
+				ButtonImageText(planets,currI);
+			}
+		}
+		
+		if(e.getSource()==f.getPs().getBtnBack())
+		{
+			f.getPs().setVisible(false);
+			currI=0;
+			f.getBs().setVisible(true);
+		}
+		
+		if(e.getSource()==f.getPs().getBtnPlanet())
+		{
+			f.getPs().setVisible(false);
+			f.getBd().setVisible(true);
+		}		
+		
+		//BodyDesc
+		if(e.getSource()==f.getBd().getBtnBack()) //ci vorra' un if per stabilire se tornare su Ps o MlP
+		{
+			f.getBd().setVisible(false);
+			currI=0;
+			f.getPs().setVisible(true);
 		}
 	}
 	
-	static Icon chooseIcon(Bodroot planets,int currI)
+	private void ButtonImageText(Bodroot planets,int currI)
 	{
-		URL imageUrl=ClassLoader.getSystemResource("images/"+planets.getBodies().get(currI).getEnglishName()+".png");
+		URL imageUrl=ClassLoader.getSystemResource("images/planets/"+planets.getBodies().get(currI).getEnglishName()+".png");
 		Icon icon = new ImageIcon(imageUrl);
-		return icon;
+		f.getPs().getBtnPlanet().setIcon(icon);
+		f.getPs().getBtnPlanet().setText(planets.getBodies().get(currI).getEnglishName());
 	}
 
 }

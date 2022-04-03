@@ -2,11 +2,18 @@ package view;
 
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Graphics;
+
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
+import java.net.URL;
 
 public class BodiesSelection extends JPanel {
 
+	private Image img;
 	private JPanel gridPanel;
 	private JButton btnPlanets;
 	private JButton btnMoons;
@@ -20,12 +27,16 @@ public class BodiesSelection extends JPanel {
 	 * Create the panel.
 	 */
 	public BodiesSelection() {
+		
+		URL imageUrlBg=ClassLoader.getSystemResource("images/spaceBg.jpg");
+		img=Toolkit.getDefaultToolkit().createImage(imageUrlBg);
+		this.loadImage(img);
 		setBackground(Color.BLACK);
 		setBounds(0, 0, 1170, 861);
 		setLayout(null);
 		
 		gridPanel = new JPanel();
-		gridPanel.setBackground(Color.ORANGE);
+		gridPanel.setBackground(Color.LIGHT_GRAY);
 		gridPanel.setBounds(230, 128, 700, 600);
 		add(gridPanel);
 		gridPanel.setLayout(new GridLayout(0, 2, 200, 80));
@@ -119,5 +130,24 @@ public class BodiesSelection extends JPanel {
 		this.btnStars = btnStars;
 	}
 	
-
+	private void loadImage(Image img)
+	{
+	    try
+	    {
+	      MediaTracker track = new MediaTracker(this);
+	      track.addImage(img, 0);
+	      track.waitForID(0);
+	    }
+	    catch (InterruptedException e)
+	    {
+	      e.printStackTrace();
+	    }
+	 }
+	
+	protected void paintComponent(Graphics g)
+	{
+	    setOpaque(false);
+	    g.drawImage(img, 0, 0, null);
+	    super.paintComponent(g);
+	}
 }
