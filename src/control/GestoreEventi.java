@@ -16,6 +16,8 @@ public class GestoreEventi implements ActionListener
 	private Finestra f;
 	private ApiCommunicator api;
 	private static int currI=0;
+	private static Bodroot bodiesReq=null;
+	private static String urlB="";
 	
 	public GestoreEventi(Finestra f,ApiCommunicator api)
 	{
@@ -32,29 +34,31 @@ public class GestoreEventi implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		String urlB="?filter[]=isPlanet,eq,true&order=aphelion";
-		Bodroot planets=api.makeBodies(urlB);
-		
 		/***BodiesSelection***/
 		if(e.getSource()==f.getBs().getBtnPlanets()) //da Bs a Ps
 		{
 			f.getBs().setVisible(false);
-			ButtonImageText(planets,currI);
+			if(!urlB.equals("?filter[]=isPlanet,eq,true&order=aphelion"))
+			{
+				urlB="?filter[]=isPlanet,eq,true&order=aphelion";
+				bodiesReq=api.makeBodies(urlB);
+			}
+			ButtonImageText(bodiesReq,currI);
 			f.getPs().setVisible(true);
 		}
 		
 		/***PlanetSelection***/
 		if(e.getSource()==f.getPs().getBtnRight())
 		{
-			if(currI<planets.getBodies().size()-1)
+			if(currI<bodiesReq.getBodies().size()-1)
 			{
 				currI++;
-				ButtonImageText(planets,currI);
+				ButtonImageText(bodiesReq,currI);
 			}
 			else
 			{
 				currI=0;
-				ButtonImageText(planets,currI);
+				ButtonImageText(bodiesReq,currI);
 			}
 		}
 		
@@ -63,12 +67,12 @@ public class GestoreEventi implements ActionListener
 			if(currI>0)
 			{
 				currI--;
-				ButtonImageText(planets,currI);
+				ButtonImageText(bodiesReq,currI);
 			}
 			else
 			{
-				currI=planets.getBodies().size()-1;
-				ButtonImageText(planets,currI);
+				currI=bodiesReq.getBodies().size()-1;
+				ButtonImageText(bodiesReq,currI);
 			}
 		}
 		
@@ -82,12 +86,12 @@ public class GestoreEventi implements ActionListener
 		if(e.getSource()==f.getPs().getBtnPlanet()) //da Ps a Bd
 		{
 			f.getPs().setVisible(false);
-			Bodroot.Bodies currPlanetName=planets.getBodies().get(currI);
+			Bodroot.Bodies currPlanetName=bodiesReq.getBodies().get(currI);
 			URL imageUrl=ClassLoader.getSystemResource("images/planets/"+currPlanetName.getEnglishName()+".png");
 			Icon icon = new ImageIcon(imageUrl);
 			f.getBd().getLblBodyImage().setIcon(icon);
 			Bodroot body=api.makeBodies(currPlanetName.getId());
-			f.getBd().getTableBodyDesc().setModel(body.printBodyTable());
+			f.getBd().getTableBodyDesc().setModel(bodiesReq.printBodyTable());
 			f.getBd().setVisible(true);
 		}		
 		
