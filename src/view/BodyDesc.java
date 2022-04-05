@@ -43,7 +43,7 @@ public class BodyDesc extends JPanel {
 		img=Toolkit.getDefaultToolkit().createImage(imageUrlBg);
 		this.loadImage(img);
 		setBounds(0, 0, 1170, 861);
-		setLayout(new GridLayout(0, 2, 0, 0));
+		setLayout(new GridLayout(1, 2, 0, 0));
 		
 		componentsContainter = new JPanel();
 		add(componentsContainter);

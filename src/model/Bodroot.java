@@ -207,6 +207,7 @@ public class Bodroot {
 		{
 			try
 			{
+				value="";
 				firstCap = fields[i].getName().substring(0, 1).toUpperCase()+fields[i].getName().substring(1);
 				firstCap = firstCap.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2");
 				field = firstCap+":";
@@ -216,8 +217,10 @@ public class Bodroot {
 				{
 					if(fields[i].get(bodies.get(0)).getClass() == AroundPlanet.class)
 					{
+						
 						if(((AroundPlanet)fields[i].get(bodies.get(0))).getContent().size() != 1)
 							value = ""+((JAXBElement)((AroundPlanet)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
+						
 					}
 					else if(fields[i].get(bodies.get(0)).getClass() == Mass.class)
 					{
@@ -248,6 +251,7 @@ public class Bodroot {
 				}
 				else
 					value = ""+fields[i].get(bodies.get(0));
+				
 				if(value!="")
 					model.addRow(new String[]{field,value});
 			}
@@ -259,16 +263,87 @@ public class Bodroot {
 		return model;
 	}
     
-    public DefaultTableModel printBodiesList()
+    public DefaultTableModel printBodyTable(Bodroot engNames)
 	{
 		DefaultTableModel model=new DefaultTableModel();
+		model.addColumn("Data");
+		model.addColumn("Value");
+		
+		Field[] fields = Bodroot.Bodies.class.getDeclaredFields();
+		String firstCap="";
+		String field="";
+		String value="";
+		for(int i=0;i<fields.length-4;i++)
+		{
+			try
+			{
+				value="";
+				firstCap = fields[i].getName().substring(0, 1).toUpperCase()+fields[i].getName().substring(1);
+				firstCap = firstCap.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2");
+				field = firstCap+":";
+				if(fields[i].get(bodies.get(0)).getClass() != String.class
+						&& !(fields[i].get(bodies.get(0)) instanceof Number)
+				)
+				{
+					if(fields[i].get(bodies.get(0)).getClass() == AroundPlanet.class)
+					{
+						
+						if(((AroundPlanet)fields[i].get(bodies.get(0))).getContent().size() != 1)
+							value = engNames.bodies.get(0).englishName;
+						
+					}
+					else if(fields[i].get(bodies.get(0)).getClass() == Mass.class)
+					{
+						if(((Mass)fields[i].get(bodies.get(0))).getContent().size() != 1)
+						{
+							value = ""+((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(1)).getValue()
+									+" x 10^"
+									+ ((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
+						}
+					}
+					else if(fields[i].get(bodies.get(0)).getClass() == Vol.class)
+					{
+						if(((Vol)fields[i].get(bodies.get(0))).getContent().size() != 1)
+						{
+							value = ""+((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(0)).getValue()
+									+" x 10^"
+									+ ((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(1)).getValue();
+						}
+					}
+					else if(fields[i].get(bodies.get(0)).getClass() == Moons.class)
+					{
+						//if(((JAXBElement)(Moons)fields[i].get(bodies.get(0)).getContent().get(0)).getValue())
+						//{
+							
+							//value = ""+;
+						//}
+					}
+				}
+				else
+					value = ""+fields[i].get(bodies.get(0));
+				
+				if(value!="")
+					model.addRow(new String[]{field,value});
+			}
+			catch (IllegalArgumentException | IllegalAccessException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return model;
+	}
+    
+    public DefaultTableModel printBodiesList(Bodroot englishNames) //gestire multi invio di engNames
+	{
+		DefaultTableModel model=new DefaultTableModel();
+		model.addColumn("Id");
 		model.addColumn("Name");
 		model.addColumn("Around Planet");
 
-		Bodroot body=null;
 		for(int i=0;i<bodies.size();i++)
 		{
-			model.addRow(new String[]{bodies.get(i).getId(), ""+((JAXBElement)bodies.get(i).getAroundPlanet().getContent().get(0)).getValue()});
+			//model.addRow(new String[]{bodies.get(i).getId(), bodies.get(i).getEnglishName(), englishNames.bodies.get(0).getEnglishName()});
+			model.addRow(new String[]{bodies.get(i).getId(), bodies.get(i).getEnglishName(), ""+((JAXBElement)bodies.get(i).getAroundPlanet().getContent().get(0)).getValue()});
 			
 		}
 		return model;
@@ -277,12 +352,12 @@ public class Bodroot {
     public DefaultTableModel printBodiesListNoMoon()
    	{
    		DefaultTableModel model=new DefaultTableModel();
+   		model.addColumn("Id");
    		model.addColumn("Name");
-
-   		Bodroot body=null;
+   		
    		for(int i=0;i<bodies.size();i++)
    		{
-   			model.addRow(new String[]{bodies.get(i).getId()});
+   			model.addRow(new String[]{bodies.get(i).getId(), bodies.get(i).getEnglishName()});
    			
    		}
    		return model;

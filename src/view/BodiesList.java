@@ -4,6 +4,8 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.JScrollPane;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -17,7 +19,7 @@ import javax.swing.ImageIcon;
 
 import java.awt.Font;
 
-public class MoonsListPanel extends JPanel {
+public class BodiesList extends JPanel {
 	
 	private Image img;
 	private JScrollPane scrollPane;
@@ -27,7 +29,7 @@ public class MoonsListPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public MoonsListPanel()
+	public BodiesList()
 	{
 		URL imageUrlBg=ClassLoader.getSystemResource("images/spaceBg.jpg");
 		img=Toolkit.getDefaultToolkit().createImage(imageUrlBg);
@@ -36,7 +38,7 @@ public class MoonsListPanel extends JPanel {
 		setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(364, 5, 452, 402);
+		scrollPane.setBounds(364, 30, 452, 756);
 		add(scrollPane);
 		
 		tableOfMoons = new JTable(){
@@ -48,8 +50,20 @@ public class MoonsListPanel extends JPanel {
 				return false;
 			}
 		};
-		//tableOfMoons.setRowSelectionAllowed(false);
+		tableOfMoons.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 19));
+		tableOfMoons.getTableHeader().setForeground(Color.BLACK);
+		tableOfMoons.getTableHeader().setOpaque(false);
+		tableOfMoons.getTableHeader().setBackground(Color.ORANGE);
+		
+		tableOfMoons.setRowSelectionAllowed(false);
+		tableOfMoons.setRowHeight(27);
+		tableOfMoons.setFont(new Font("Tahoma", Font.BOLD, 19));
+		tableOfMoons.setForeground(Color.ORANGE);
+		tableOfMoons.setOpaque(false);
+		((DefaultTableCellRenderer)tableOfMoons.getDefaultRenderer(Object.class)).setOpaque(false);
 		scrollPane.setViewportView(tableOfMoons);
+		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setOpaque(false);
 		
 		URL imageUrl=ClassLoader.getSystemResource("images/back.png");
 		Icon icon = new ImageIcon(imageUrl);

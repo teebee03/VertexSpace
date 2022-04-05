@@ -35,7 +35,7 @@ public class BodiesSelection extends JPanel {
 		setLayout(null);
 		
 		gridPanel = new JPanel();
-		gridPanel.setBackground(Color.LIGHT_GRAY);
+		gridPanel.setOpaque(false);
 		gridPanel.setBounds(230, 128, 700, 600);
 		add(gridPanel);
 		gridPanel.setLayout(new GridLayout(0, 2, 200, 80));
