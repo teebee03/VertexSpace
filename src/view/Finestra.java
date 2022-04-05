@@ -64,7 +64,10 @@ public class Finestra extends JFrame implements WindowListener {
 		bd.setVisible(false);
 		contentPane.add(bd);
 		
-		ml=null;
+		ml=new MoonsListPanel();
+		ml.setBounds(0, 0, 1170, 861);
+		ml.setVisible(false);
+		contentPane.add(ml);
 		
 		setVisible(true);
 	}

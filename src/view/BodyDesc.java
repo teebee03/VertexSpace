@@ -74,10 +74,6 @@ public class BodyDesc extends JPanel {
 		btnBack.setBounds(39, 734, 126, 90);
 		componentsContainter.add(btnBack);
 		
-		//scrollPane = new JScrollPane();
-		//scrollPane.setOpaque(false);
-		//add(scrollPane);
-		
 		tableBodyDesc = new JTable(){
 			private static final long serialVersionUID = 1L;
 

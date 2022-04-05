@@ -25,6 +25,9 @@ import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.sun.tools.rngom.binary.visitor.ChildElementFinder.Element;
+import com.sun.tools.rngom.util.Uri;
+
 import model.Bodroot.Bodies.AroundPlanet;
 import model.Bodroot.Bodies.Mass;
 import model.Bodroot.Bodies.Moons;
@@ -214,7 +217,7 @@ public class Bodroot {
 					if(fields[i].get(bodies.get(0)).getClass() == AroundPlanet.class)
 					{
 						if(((AroundPlanet)fields[i].get(bodies.get(0))).getContent().size() != 1)
-							value = ""+((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
+							value = ""+((JAXBElement)((AroundPlanet)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
 					}
 					else if(fields[i].get(bodies.get(0)).getClass() == Mass.class)
 					{
@@ -234,27 +237,56 @@ public class Bodroot {
 									+ ((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(1)).getValue();
 						}
 					}
-					/*else if(fields[i].get(bodies.get(0)).getClass() == Moons.class)
+					else if(fields[i].get(bodies.get(0)).getClass() == Moons.class)
 					{
-						if(((Moons)fields[i].get(bodies.get(0))).getContent().size() != 1)
-						{
-							System.out.println((JAXBElement)((Moons)fields[i].get(bodies.get(0))).getContent());
-							//value = ""+((JAXBElement)((Moons)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
-						}
-					}*/ //metodo da correggere
+						//if(((JAXBElement)(Moons)fields[i].get(bodies.get(0)).getContent().get(0)).getValue())
+						//{
+							
+							//value = ""+;
+						//}
+					}
 				}
 				else
 					value = ""+fields[i].get(bodies.get(0));
-				model.addRow(new String[]{field,value});
+				if(value!="")
+					model.addRow(new String[]{field,value});
 			}
 			catch (IllegalArgumentException | IllegalAccessException e)
 			{
 				e.printStackTrace();
 			}
 		}
-		
 		return model;
 	}
+    
+    public DefaultTableModel printBodiesList()
+	{
+		DefaultTableModel model=new DefaultTableModel();
+		model.addColumn("Name");
+		model.addColumn("Around Planet");
+
+		Bodroot body=null;
+		for(int i=0;i<bodies.size();i++)
+		{
+			model.addRow(new String[]{bodies.get(i).getId(), ""+((JAXBElement)bodies.get(i).getAroundPlanet().getContent().get(0)).getValue()});
+			
+		}
+		return model;
+	}
+    
+    public DefaultTableModel printBodiesListNoMoon()
+   	{
+   		DefaultTableModel model=new DefaultTableModel();
+   		model.addColumn("Name");
+
+   		Bodroot body=null;
+   		for(int i=0;i<bodies.size();i++)
+   		{
+   			model.addRow(new String[]{bodies.get(i).getId()});
+   			
+   		}
+   		return model;
+   	}
 
     /**
      * <p>Classe Java per anonymous complex type.
