@@ -340,10 +340,22 @@ public class Bodroot {
 		model.addColumn("Name");
 		model.addColumn("Around Planet");
 
+		
 		for(int i=0;i<bodies.size();i++)
 		{
-			//model.addRow(new String[]{bodies.get(i).getId(), bodies.get(i).getEnglishName(), englishNames.bodies.get(0).getEnglishName()});
-			model.addRow(new String[]{bodies.get(i).getId(), bodies.get(i).getEnglishName(), ""+((JAXBElement)bodies.get(i).getAroundPlanet().getContent().get(0)).getValue()});
+			int j=0;
+			String engName="";
+			Boolean flag=false;
+			while(j<englishNames.bodies.size() && !flag)
+			{
+				if(((JAXBElement)bodies.get(i).getAroundPlanet().getContent().get(0)).getValue().equals(englishNames.bodies.get(j).getId()))
+					flag=true;
+				else
+					j++;
+			}
+			if(flag)
+				engName=englishNames.bodies.get(j).getEnglishName();
+			model.addRow(new String[]{bodies.get(i).getId(), bodies.get(i).getEnglishName(), engName});
 			
 		}
 		return model;

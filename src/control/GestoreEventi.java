@@ -114,12 +114,35 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 			{
 				urlB="?filter[]=bodyType,eq,Moon&data=id,englishName,aroundPlanet,planet,rel";
 				bodiesReq=api.makeBodies(urlB);
+				
+				String link="?filter[]=isPlanet,eq,true&data=id,englishName";
+				Bodroot engNames = api.makeBodies(link);
+				String aroundPlanet="";
+				for(int i=0;i<bodiesReq.getBodies().size();i++)
+				{
+					aroundPlanet = ""+((JAXBElement)bodiesReq.getBodies().get(i).getAroundPlanet().getContent().get(0)).getValue();
+					
+					Boolean flag=false;
+					int j=0;
+					while(j<engNames.getBodies().size() && !flag)
+					{
+						if(engNames.getBodies().get(j).getId().equals(aroundPlanet))
+							flag=true;
+						else
+							j++;
+					}
+					if(!flag)
+					{
+						Bodroot req=api.makeBodies(aroundPlanet+"?data=id,englishName");
+						engNames.getBodies().add(req.getBodies().get(0));
+					}
+				}
+				for(int i=0;i<engNames.getBodies().size();i++)//
+					System.out.println(engNames.getBodies().get(i).getEnglishName());
+				f.getMl().getTableOfMoons().setModel(bodiesReq.printBodiesList(engNames));
+				f.getMl().getTableOfMoons().removeColumn(f.getMl().getTableOfMoons().getColumnModel().getColumn(0));
 			}
-			String link=""+((JAXBElement)bodiesReq.getBodies().get(0).getAroundPlanet().getContent().get(1)).getValue();
-			link=link.replace("https://api.le-systeme-solaire.net/rest/bodies/","");
-			Bodroot engNames=api.makeBodies(link+"?data=id,englishName");
-			f.getMl().getTableOfMoons().setModel(bodiesReq.printBodiesList(engNames));
-			f.getMl().getTableOfMoons().removeColumn(f.getMl().getTableOfMoons().getColumnModel().getColumn(0));
+						
 			f.getMl().setVisible(true);
 		}
 		
