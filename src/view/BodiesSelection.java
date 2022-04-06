@@ -1,15 +1,20 @@
 package view;
 
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.net.URL;
+import java.awt.Font;
 
 public class BodiesSelection extends JPanel {
 
@@ -36,26 +41,69 @@ public class BodiesSelection extends JPanel {
 		
 		gridPanel = new JPanel();
 		gridPanel.setOpaque(false);
-		gridPanel.setBounds(230, 128, 700, 600);
+		gridPanel.setBounds(295, 128, 570, 600);
 		add(gridPanel);
-		gridPanel.setLayout(new GridLayout(0, 2, 200, 80));
+		gridPanel.setLayout(new GridLayout(0, 2, 270, 80));
+		
 		
 		btnPlanets = new JButton("Planets");
+		btnPlanets.setForeground(Color.ORANGE);
+		btnPlanets.setBackground(Color.BLACK);
+		btnPlanets.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnPlanets.setIcon(createButtonIcon("mars"));
+		btnPlanets.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnPlanets.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnPlanets.setFocusPainted(false);
 		gridPanel.add(btnPlanets);
 		
 		btnMoons = new JButton("Moons");
+		btnMoons.setForeground(Color.ORANGE);
+		btnMoons.setBackground(Color.BLACK);
+		btnMoons.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnMoons.setIcon(createButtonIcon("moon"));
+		btnMoons.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnMoons.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnMoons.setFocusPainted(false);
 		gridPanel.add(btnMoons);
 		
 		btnDwarfPlanets = new JButton("Dwarf Planets");
+		btnDwarfPlanets.setForeground(Color.ORANGE);
+		btnDwarfPlanets.setBackground(Color.BLACK);
+		btnDwarfPlanets.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnDwarfPlanets.setIcon(createButtonIcon("pluto"));
+		btnDwarfPlanets.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnDwarfPlanets.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnDwarfPlanets.setFocusPainted(false);
 		gridPanel.add(btnDwarfPlanets);
 		
 		btnAsteroids = new JButton("Asteroids");
+		btnAsteroids.setForeground(Color.ORANGE);
+		btnAsteroids.setBackground(Color.BLACK);
+		btnAsteroids.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnAsteroids.setIcon(createButtonIcon("asteroid"));
+		btnAsteroids.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnAsteroids.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnAsteroids.setFocusPainted(false);
 		gridPanel.add(btnAsteroids);
 		
 		btnComets = new JButton("Comets");
+		btnComets.setForeground(Color.ORANGE);
+		btnComets.setBackground(Color.BLACK);
+		btnComets.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnComets.setIcon(createButtonIcon("comet"));
+		btnComets.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnComets.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnComets.setFocusPainted(false);
 		gridPanel.add(btnComets);
 		
 		btnStars = new JButton("Stars");
+		btnStars.setForeground(Color.ORANGE);
+		btnStars.setBackground(Color.BLACK);
+		btnStars.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnStars.setIcon(createButtonIcon("sun"));
+		btnStars.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnStars.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnStars.setFocusPainted(false);
 		gridPanel.add(btnStars);
 	}
 
@@ -148,5 +196,13 @@ public class BodiesSelection extends JPanel {
 	    setOpaque(false);
 	    g.drawImage(img, 0, 0, null);
 	    super.paintComponent(g);
+	}
+	
+	private Icon createButtonIcon(String body)
+	{
+		URL imageUrl=ClassLoader.getSystemResource("images/planets/"+body+".png");
+		Image img= new ImageIcon(imageUrl).getImage().getScaledInstance( 115, 115,  java.awt.Image.SCALE_SMOOTH );
+		Icon icon = new ImageIcon(img);
+		return icon;
 	}
 }

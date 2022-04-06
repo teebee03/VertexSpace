@@ -38,7 +38,7 @@ public class BodiesList extends JPanel {
 		setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(364, 30, 452, 756);
+		scrollPane.setBounds(360, 30, 460, 756);
 		add(scrollPane);
 		
 		tableOfMoons = new JTable(){

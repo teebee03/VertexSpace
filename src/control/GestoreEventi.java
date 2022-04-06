@@ -137,8 +137,6 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 						engNames.getBodies().add(req.getBodies().get(0));
 					}
 				}
-				for(int i=0;i<engNames.getBodies().size();i++)//
-					System.out.println(engNames.getBodies().get(i).getEnglishName());
 				f.getMl().getTableOfMoons().setModel(bodiesReq.printBodiesList(engNames));
 				f.getMl().getTableOfMoons().removeColumn(f.getMl().getTableOfMoons().getColumnModel().getColumn(0));
 			}
@@ -248,7 +246,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 				bodiesReq=api.makeBodies(urlB);
 				try
 				{
-					URL imageUrl=ClassLoader.getSystemResource("images/planets/"+urlB+".png");
+					URL imageUrl=ClassLoader.getSystemResource("images/planets/"+bodiesReq.getBodies().get(0).getEnglishName()+".png");
 					Icon icon = new ImageIcon(imageUrl);
 					f.getBd().getLblBodyImage().setIcon(icon);
 				}
@@ -256,8 +254,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 				{}
 				if(bodiesReq.getBodies().get(0).getAroundPlanet().getContent().size() !=1)
 				{
-					String link=""+((JAXBElement)bodiesReq.getBodies().get(0).getAroundPlanet().getContent().get(1)).getValue();
-					link=link.replace("https://api.le-systeme-solaire.net/rest/bodies/","");
+					String link=""+((JAXBElement)bodiesReq.getBodies().get(0).getAroundPlanet().getContent().get(0)).getValue();
 					Bodroot engNames=api.makeBodies(link+"?data=id,englishName");
 					f.getBd().getTableBodyDesc().setModel(bodiesReq.printBodyTable(engNames));
 				}
