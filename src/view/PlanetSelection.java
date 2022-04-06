@@ -5,12 +5,10 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.swing.JPanel;
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 
 import model.Bodroot;
 import java.awt.Font;

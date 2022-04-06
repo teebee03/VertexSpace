@@ -134,7 +134,7 @@ public class Finestra extends JFrame implements WindowListener {
 	public void windowOpened(WindowEvent e) {
 
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

@@ -4,10 +4,8 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.JViewport;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.JScrollPane;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;

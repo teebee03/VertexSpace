@@ -46,64 +46,22 @@ public class BodiesSelection extends JPanel {
 		gridPanel.setLayout(new GridLayout(0, 2, 270, 80));
 		
 		
-		btnPlanets = new JButton("Planets");
-		btnPlanets.setForeground(Color.ORANGE);
-		btnPlanets.setBackground(Color.BLACK);
-		btnPlanets.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnPlanets.setIcon(createButtonIcon("mars"));
-		btnPlanets.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnPlanets.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnPlanets.setFocusPainted(false);
+		btnPlanets = createButton("Planets","mars");
 		gridPanel.add(btnPlanets);
 		
-		btnMoons = new JButton("Moons");
-		btnMoons.setForeground(Color.ORANGE);
-		btnMoons.setBackground(Color.BLACK);
-		btnMoons.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnMoons.setIcon(createButtonIcon("moon"));
-		btnMoons.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnMoons.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnMoons.setFocusPainted(false);
+		btnMoons = createButton("Moons","moon");
 		gridPanel.add(btnMoons);
 		
-		btnDwarfPlanets = new JButton("Dwarf Planets");
-		btnDwarfPlanets.setForeground(Color.ORANGE);
-		btnDwarfPlanets.setBackground(Color.BLACK);
-		btnDwarfPlanets.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnDwarfPlanets.setIcon(createButtonIcon("pluto"));
-		btnDwarfPlanets.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnDwarfPlanets.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnDwarfPlanets.setFocusPainted(false);
+		btnDwarfPlanets = createButton("Dwarf Planets","pluto",16);
 		gridPanel.add(btnDwarfPlanets);
 		
-		btnAsteroids = new JButton("Asteroids");
-		btnAsteroids.setForeground(Color.ORANGE);
-		btnAsteroids.setBackground(Color.BLACK);
-		btnAsteroids.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnAsteroids.setIcon(createButtonIcon("asteroid"));
-		btnAsteroids.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnAsteroids.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnAsteroids.setFocusPainted(false);
+		btnAsteroids = createButton("Asteroids","asteroid");
 		gridPanel.add(btnAsteroids);
 		
-		btnComets = new JButton("Comets");
-		btnComets.setForeground(Color.ORANGE);
-		btnComets.setBackground(Color.BLACK);
-		btnComets.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnComets.setIcon(createButtonIcon("comet"));
-		btnComets.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnComets.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnComets.setFocusPainted(false);
+		btnComets = createButton("Comets","comet");
 		gridPanel.add(btnComets);
 		
-		btnStars = new JButton("Stars");
-		btnStars.setForeground(Color.ORANGE);
-		btnStars.setBackground(Color.BLACK);
-		btnStars.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnStars.setIcon(createButtonIcon("sun"));
-		btnStars.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnStars.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnStars.setFocusPainted(false);
+		btnStars = createButton("Stars","sun");
 		gridPanel.add(btnStars);
 	}
 
@@ -204,5 +162,31 @@ public class BodiesSelection extends JPanel {
 		Image img= new ImageIcon(imageUrl).getImage().getScaledInstance( 115, 115,  java.awt.Image.SCALE_SMOOTH );
 		Icon icon = new ImageIcon(img);
 		return icon;
+	}
+	
+	private JButton createButton(String text, String iconN)
+	{
+		JButton btn = new JButton(text);
+		btn.setForeground(Color.ORANGE);
+		btn.setBackground(Color.BLACK);
+		btn.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btn.setIcon(createButtonIcon(iconN));
+		btn.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btn.setHorizontalTextPosition(SwingConstants.CENTER);
+		btn.setFocusPainted(false);
+		return btn;
+	}
+	
+	private JButton createButton(String text, String iconN, int fontSize)
+	{
+		JButton btn = new JButton(text);
+		btn.setForeground(Color.ORANGE);
+		btn.setBackground(Color.BLACK);
+		btn.setFont(new Font("Tahoma", Font.BOLD, fontSize));
+		btn.setIcon(createButtonIcon(iconN));
+		btn.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btn.setHorizontalTextPosition(SwingConstants.CENTER);
+		btn.setFocusPainted(false);
+		return btn;
 	}
 }

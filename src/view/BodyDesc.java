@@ -17,12 +17,10 @@ import model.Bodroot;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 
