@@ -44,6 +44,11 @@ public class ApiCommunicator
 				xml = String.join("", "<bodroot><bodies>", xml, "</bodies></bodroot>");
 			else
 				xml = String.join("", "<bodroot>", xml, "</bodroot>");
+				
+				
+			
+			
+			
 			File f = new File("body.xml");
 			FileWriter fo = new FileWriter(f);
 			fo.write(xml);

@@ -8,6 +8,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBElement;
 
 import model.ApiCommunicator;
@@ -196,7 +197,21 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 			Icon icon = new ImageIcon(imageUrl);
 			f.getBd().getLblBodyImage().setIcon(icon);
 			Bodroot body=api.makeBodies(currPlanetName.getId());
-			f.getBd().getTableBodyDesc().setModel(body.printBodyTable());
+			//count moons
+			Bodroot moons =api.makeBodies("?filter[]=bodyType,eq,Moon&data=id,englishName,aroundPlanet,planet");
+			int counter =0;
+			for (int i = 0; i < moons.getBodies().size(); i++) 
+			{
+				if (body.getBodies().get(0).getId().equals(((JAXBElement)moons.getBodies().get(i).getAroundPlanet().getContent().get(0)).getValue()))
+				{
+					counter++;
+				}
+			}
+			
+			DefaultTableModel model = body.printBodyTable();
+			model.insertRow(1,new String[]{"Moons:",""+counter} );
+			
+			f.getBd().getTableBodyDesc().setModel(model);
 			f.getBd().setVisible(true);
 		}		
 		
