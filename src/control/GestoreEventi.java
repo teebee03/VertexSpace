@@ -255,9 +255,9 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 				f.getBd().getLblBodyImage().setIcon(null);
 				urlB = ""+f.getMl().getTableOfMoons().getModel().getValueAt(row, 0);
 				bodiesReq=api.makeBodies(urlB);
+				URL imageUrl=null;
 				try
 				{
-					URL imageUrl=null;
 					if(!bodiesReq.getBodies().get(0).getEnglishName().equals("C/2020 F3 (NEOWISE)"))
 						imageUrl=ClassLoader.getSystemResource("images/planets/"+bodiesReq.getBodies().get(0).getEnglishName()+".png");
 					else
@@ -265,11 +265,17 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 					//System.out.println(bodiesReq.getBodies().get(0).getEnglishName());
 					Icon icon = new ImageIcon(imageUrl);
 					f.getBd().getLblBodyImage().setIcon(icon);
+					
 				}
 				catch(NullPointerException ex)
 				{
-					
+					System.out.println(bodiesReq.getBodies().get(0).getEnglishName());
+					if(bodiesReq.getBodies().get(0).getBodyType().equals("Asteroid"))
+						imageUrl=ClassLoader.getSystemResource("images/planets/asteroidImage.png");
+						
 				}
+				Icon icon = new ImageIcon(imageUrl);
+				f.getBd().getLblBodyImage().setIcon(icon);
 				if(bodiesReq.getBodies().get(0).getAroundPlanet().getContent().size() !=1)
 				{
 					String link=""+((JAXBElement)bodiesReq.getBodies().get(0).getAroundPlanet().getContent().get(0)).getValue();
