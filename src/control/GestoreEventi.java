@@ -242,12 +242,19 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 				bodiesReq=api.makeBodies(urlB);
 				try
 				{
-					URL imageUrl=ClassLoader.getSystemResource("images/planets/"+bodiesReq.getBodies().get(0).getEnglishName()+".png");
+					URL imageUrl=null;
+					if(!bodiesReq.getBodies().get(0).getEnglishName().equals("C/2020 F3 (NEOWISE)"))
+						imageUrl=ClassLoader.getSystemResource("images/planets/"+bodiesReq.getBodies().get(0).getEnglishName()+".png");
+					else
+						imageUrl=ClassLoader.getSystemResource("images/planets/C2020 F3 (NEOWISE).png");
+					//System.out.println(bodiesReq.getBodies().get(0).getEnglishName());
 					Icon icon = new ImageIcon(imageUrl);
 					f.getBd().getLblBodyImage().setIcon(icon);
 				}
 				catch(NullPointerException ex)
-				{}
+				{
+					
+				}
 				if(bodiesReq.getBodies().get(0).getAroundPlanet().getContent().size() !=1)
 				{
 					String link=""+((JAXBElement)bodiesReq.getBodies().get(0).getAroundPlanet().getContent().get(0)).getValue();

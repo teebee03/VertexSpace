@@ -58,7 +58,7 @@ public class BodiesSelection extends JPanel {
 		btnAsteroids = createButton("Asteroids","asteroid");
 		gridPanel.add(btnAsteroids);
 		
-		btnComets = createButton("Comets","comet");
+		btnComets = createButton("Comets","comet hyakutake");
 		gridPanel.add(btnComets);
 		
 		btnStars = createButton("Stars","sun");
