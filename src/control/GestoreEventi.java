@@ -277,7 +277,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 					else 
 					{
 						//change moon default image
-						imageUrl=ClassLoader.getSystemResource("images/planets/moon.png");
+						imageUrl=ClassLoader.getSystemResource("images/planets/moonImage.png");
 					}
 					Icon icon = new ImageIcon(imageUrl);
 					f.getBd().getLblBodyImage().setIcon(icon);
