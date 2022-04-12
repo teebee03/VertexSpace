@@ -269,13 +269,21 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 				}
 				catch(NullPointerException ex)
 				{
-					System.out.println(bodiesReq.getBodies().get(0).getEnglishName());
+					//System.out.println(bodiesReq.getBodies().get(0).getEnglishName());
 					if(bodiesReq.getBodies().get(0).getBodyType().equals("Asteroid"))
+					{
 						imageUrl=ClassLoader.getSystemResource("images/planets/asteroidImage.png");
+					}
+					else 
+					{
+						//change moon default image
+						imageUrl=ClassLoader.getSystemResource("images/planets/moon.png");
+					}
+					Icon icon = new ImageIcon(imageUrl);
+					f.getBd().getLblBodyImage().setIcon(icon);
 						
 				}
-				Icon icon = new ImageIcon(imageUrl);
-				f.getBd().getLblBodyImage().setIcon(icon);
+				
 				if(bodiesReq.getBodies().get(0).getAroundPlanet().getContent().size() !=1)
 				{
 					String link=""+((JAXBElement)bodiesReq.getBodies().get(0).getAroundPlanet().getContent().get(0)).getValue();
@@ -288,5 +296,4 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 			}
 		}
 	}
-
 }

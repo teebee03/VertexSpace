@@ -157,7 +157,13 @@ import model.Bodroot.Bodies.Vol;
     "bodies"
 })
 @XmlRootElement(name = "bodroot")
-public class Bodroot {
+/**
+ * Classe radice, contiene i corpi ricevuti dall'api con all'interno i dati richiesti
+ * @author tommaso bertelli, lorenzo alberti
+ *
+ */
+public class Bodroot 
+{
 
     protected List<Bodroot.Bodies> bodies;
 
@@ -189,7 +195,11 @@ public class Bodroot {
         }
         return this.bodies;
     }
-
+    /**
+     * Metodo che, prendendo i dati del corpo, crea una tabella che lo descrive
+     * 
+     * @return Modello della tabella con i dati inseriti
+     */
     public DefaultTableModel printBodyTable()
 	{
 		DefaultTableModel model=new DefaultTableModel();

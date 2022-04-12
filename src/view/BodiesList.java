@@ -17,7 +17,9 @@ import javax.swing.ImageIcon;
 
 import java.awt.Font;
 
-public class BodiesList extends JPanel {
+
+public class BodiesList extends JPanel 
+{
 	
 	private Image img;
 	private JScrollPane scrollPane;

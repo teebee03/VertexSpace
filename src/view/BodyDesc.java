@@ -35,6 +35,11 @@ public class BodyDesc extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	
+	/***
+	 * 
+	 * @param body
+	 */
 	public BodyDesc(Bodroot body)
 	{
 		URL imageUrlBg=ClassLoader.getSystemResource("images/spaceBg.jpg");
