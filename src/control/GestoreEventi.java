@@ -6,16 +6,19 @@ import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import javax.xml.bind.JAXBElement;
 
 import model.ApiCommunicator;
 import model.Bodroot;
 import view.Finestra;
 
-public class GestoreEventi implements ActionListener,ListSelectionListener
+public class GestoreEventi implements ActionListener,ListSelectionListener,DocumentListener
 {
 	private Finestra f;
 	private ApiCommunicator api;
@@ -38,8 +41,9 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 		f.getPs().getBtnBack().addActionListener(this);
 		f.getPs().getBtnPlanet().addActionListener(this);
 		f.getBd().getBtnBack().addActionListener(this);
-		f.getMl().getTableOfMoons().getSelectionModel().addListSelectionListener(this);
-		f.getMl().getBtnBack().addActionListener(this);
+		f.getBl().getTableOfMoons().getSelectionModel().addListSelectionListener(this);
+		f.getBl().getBtnBack().addActionListener(this);
+		f.getBl().getSearchField().getDocument().addDocumentListener(this);
 	}
 	
 	@Override
@@ -65,51 +69,61 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 			{}
 			f.getBd().setVisible(true);
 		}
+		
 		if(e.getSource()==f.getBs().getBtnDwarfPlanets()) //da Bs a Bl (dwarf planets)
 		{
 			f.getBs().setVisible(false);
-			if(urlB!="?filter[]=bodyType,eq,Dwarf%20Planet&data=id,englishName")
+			if(urlB!="?filter[]=bodyType,eq,Dwarf%20Planet&data=id,englishName,bodyType")
 			{
-				urlB="?filter[]=bodyType,eq,Dwarf%20Planet&data=id,englishName";
+				urlB="?filter[]=bodyType,eq,Dwarf%20Planet&data=id,englishName,bodyType";
 				bodiesReq=api.makeBodies(urlB);
+				f.getBl().getTableOfMoons().setModel(bodiesReq.printBodiesListNoMoon());
+				f.getBl().getTableOfMoons().removeColumn(f.getBl().getTableOfMoons().getColumnModel().getColumn(0));
+				TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfMoons().getModel());
+				f.getBl().getTableOfMoons().setRowSorter(ts);
 			}
-			f.getMl().getTableOfMoons().setModel(bodiesReq.printBodiesListNoMoon());
-			f.getMl().getTableOfMoons().removeColumn(f.getMl().getTableOfMoons().getColumnModel().getColumn(0));
-			f.getMl().setVisible(true);
+			
+			f.getBl().setVisible(true);
 		}
 		
 		if(e.getSource()==f.getBs().getBtnComets()) //da Bs a Bl (comets)
 		{
 			f.getBs().setVisible(false);
-			if(urlB!="?filter[]=bodyType,eq,Comet&data=id,englishName")
+			if(urlB!="?filter[]=bodyType,eq,Comet&data=id,englishName,bodyType")
 			{
-				urlB="?filter[]=bodyType,eq,Comet&data=id,englishName";
+				urlB="?filter[]=bodyType,eq,Comet&data=id,englishName,bodyType";
 				bodiesReq=api.makeBodies(urlB);
+				f.getBl().getTableOfMoons().setModel(bodiesReq.printBodiesListNoMoon());
+				f.getBl().getTableOfMoons().removeColumn(f.getBl().getTableOfMoons().getColumnModel().getColumn(0));
+				TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfMoons().getModel());
+				f.getBl().getTableOfMoons().setRowSorter(ts);
 			}
-			f.getMl().getTableOfMoons().setModel(bodiesReq.printBodiesListNoMoon());
-			f.getMl().getTableOfMoons().removeColumn(f.getMl().getTableOfMoons().getColumnModel().getColumn(0));
-			f.getMl().setVisible(true);
+			
+			f.getBl().setVisible(true);
 		}
 		
 		if(e.getSource()==f.getBs().getBtnAsteroids()) //da Bs a Bl (asteroid)
 		{
 			f.getBs().setVisible(false);
-			if(urlB!="?filter[]=bodyType,eq,Asteroid&data=id,englishName")
+			if(urlB!="?filter[]=bodyType,eq,Asteroid&data=id,englishName,bodyType")
 			{
-				urlB="?filter[]=bodyType,eq,Asteroid&data=id,englishName";
+				urlB="?filter[]=bodyType,eq,Asteroid&data=id,englishName,bodyType";
 				bodiesReq=api.makeBodies(urlB);
+				f.getBl().getTableOfMoons().setModel(bodiesReq.printBodiesListNoMoon());
+				f.getBl().getTableOfMoons().removeColumn(f.getBl().getTableOfMoons().getColumnModel().getColumn(0));
+				TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfMoons().getModel());
+				f.getBl().getTableOfMoons().setRowSorter(ts);
 			}
-			f.getMl().getTableOfMoons().setModel(bodiesReq.printBodiesListNoMoon());
-			f.getMl().getTableOfMoons().removeColumn(f.getMl().getTableOfMoons().getColumnModel().getColumn(0));
-			f.getMl().setVisible(true);
+			
+			f.getBl().setVisible(true);
 		}
 		
 		if(e.getSource()==f.getBs().getBtnMoons()) //da Bs a Bl (moons)
 		{
 			f.getBs().setVisible(false);
-			if(urlB!="?filter[]=bodyType,eq,Moon&data=id,englishName,aroundPlanet,planet,rel")
+			if(urlB!="?filter[]=bodyType,eq,Moon&data=id,englishName,aroundPlanet,planet,rel,bodyType")
 			{
-				urlB="?filter[]=bodyType,eq,Moon&data=id,englishName,aroundPlanet,planet,rel";
+				urlB="?filter[]=bodyType,eq,Moon&data=id,englishName,aroundPlanet,planet,rel,bodyType";
 				bodiesReq=api.makeBodies(urlB);
 				
 				String link="?filter[]=isPlanet,eq,true&data=id,englishName";
@@ -134,11 +148,14 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 						engNames.getBodies().add(req.getBodies().get(0));
 					}
 				}
-				f.getMl().getTableOfMoons().setModel(bodiesReq.printBodiesList(engNames));
-				f.getMl().getTableOfMoons().removeColumn(f.getMl().getTableOfMoons().getColumnModel().getColumn(0));
+				f.getBl().getTableOfMoons().setModel(bodiesReq.printBodiesList(engNames));
+				f.getBl().getTableOfMoons().removeColumn(f.getBl().getTableOfMoons().getColumnModel().getColumn(0));
+				TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfMoons().getModel());
+				f.getBl().getTableOfMoons().setRowSorter(ts);
 			}
-						
-			f.getMl().setVisible(true);
+			f.getBl().getLblFilter().setVisible(true);
+			f.getBl().getSearchField().setVisible(true);		
+			f.getBl().setVisible(true);
 		}
 		
 		if(e.getSource()==f.getBs().getBtnPlanets()) //da Bs a Ps (planets)
@@ -224,13 +241,19 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 			else if(bodiesReq.getBodies().get(0).getBodyType().equals("Star"))
 				f.getBs().setVisible(true);
 			else
-				f.getMl().setVisible(true);
+				f.getBl().setVisible(true);
 		}
 		
 		/***BodiesList***/
-		if(e.getSource()==f.getMl().getBtnBack()) //da Bl a Bs
+		if(e.getSource()==f.getBl().getBtnBack()) //da Bl a Bs
 		{
-			f.getMl().setVisible(false);
+			f.getBl().setVisible(false);
+			if(bodiesReq.getBodies().get(0).getBodyType().equals("Moon"))
+			{
+				f.getBl().getSearchField().setText("");
+				f.getBl().getSearchField().setVisible(false);
+				f.getBl().getLblFilter().setVisible(false);
+			}
 			f.getBs().setVisible(true);
 		}
 	}
@@ -246,15 +269,17 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 	@Override
 	public void valueChanged(ListSelectionEvent e)
 	{
-		if(e.getSource()==f.getMl().getTableOfMoons().getSelectionModel()) //da Ml a Bd
+		if(e.getSource()==f.getBl().getTableOfMoons().getSelectionModel()) //da Ml a Bd
 		{
-			int row = f.getMl().getTableOfMoons().getSelectedRow();
-			if (row>=0)
+			int rowF = f.getBl().getTableOfMoons().getSelectedRow();
+			
+			if (rowF>=0)
 			{
-				f.getMl().getTableOfMoons().clearSelection();
-				f.getMl().setVisible(false);
+				int row = f.getBl().getTableOfMoons().getRowSorter().convertRowIndexToModel(rowF);
+				f.getBl().getTableOfMoons().clearSelection();
+				f.getBl().setVisible(false);
 				f.getBd().getLblBodyImage().setIcon(null);
-				urlB = ""+f.getMl().getTableOfMoons().getModel().getValueAt(row, 0);
+				urlB = ""+f.getBl().getTableOfMoons().getModel().getValueAt(row, 0);
 				bodiesReq=api.makeBodies(urlB);
 				URL imageUrl=null;
 				try
@@ -296,5 +321,32 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 				f.getBd().setVisible(true);
 			}
 		}
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent e)
+	{
+		if(e.getDocument()==f.getBl().getSearchField().getDocument())
+		{
+			String searchText=f.getBl().getSearchField().getText();
+			((TableRowSorter) f.getBl().getTableOfMoons().getRowSorter()).setRowFilter(new MyRowFilter(searchText));
+		}
+		
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e)
+	{
+		if(e.getDocument()==f.getBl().getSearchField().getDocument())
+		{
+			String searchText=f.getBl().getSearchField().getText();
+			((TableRowSorter) f.getBl().getTableOfMoons().getRowSorter()).setRowFilter(new MyRowFilter(searchText));
+		}	
+	}
+
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

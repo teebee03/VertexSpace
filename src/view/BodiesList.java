@@ -12,10 +12,14 @@ import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.net.URL;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 
 public class BodiesList extends JPanel 
@@ -25,6 +29,8 @@ public class BodiesList extends JPanel
 	private JScrollPane scrollPane;
 	private JTable tableOfMoons;
 	private JButton btnBack;
+	private JTextField searchField;
+	private JLabel lblFilter;
 
 	/**
 	 * Create the panel.
@@ -54,7 +60,6 @@ public class BodiesList extends JPanel
 		tableOfMoons.getTableHeader().setForeground(Color.BLACK);
 		tableOfMoons.getTableHeader().setOpaque(false);
 		tableOfMoons.getTableHeader().setBackground(Color.ORANGE);
-		
 		tableOfMoons.setRowSelectionAllowed(false);
 		tableOfMoons.setFocusable(false);
 		tableOfMoons.setRowHeight(27);
@@ -77,6 +82,23 @@ public class BodiesList extends JPanel
 		btnBack.setBackground(Color.BLACK);
 		btnBack.setBounds(39, 734, 126, 90);
 		add(btnBack);
+		
+		searchField = new JTextField();
+		searchField.setBounds(930, 758, 200, 27);
+		searchField.setFont(new Font("Tahoma", Font.BOLD, 19));
+		searchField.setForeground(Color.ORANGE);
+		searchField.setOpaque(false);
+		searchField.setVisible(false);
+		add(searchField);
+		
+		lblFilter = new JLabel("Filter:");
+		lblFilter.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblFilter.setForeground(Color.ORANGE);
+		lblFilter.setFont(new Font("Tahoma", Font.BOLD, 19));
+		lblFilter.setBounds(851, 759, 73, 24);
+		lblFilter.setVisible(false);
+		add(lblFilter);
+		
 	}
 
 	public JScrollPane getScrollPane() {
@@ -101,6 +123,22 @@ public class BodiesList extends JPanel
 
 	public void setTableOfMoons(JTable tableOfMoons) {
 		this.tableOfMoons = tableOfMoons;
+	}
+
+	public JTextField getSearchField() {
+		return searchField;
+	}
+
+	public void setSearchField(JTextField searchField) {
+		this.searchField = searchField;
+	}
+
+	public JLabel getLblFilter() {
+		return lblFilter;
+	}
+
+	public void setLblFilter(JLabel lblFilter) {
+		this.lblFilter = lblFilter;
 	}
 
 	private void loadImage(Image img)

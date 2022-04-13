@@ -17,7 +17,7 @@ public class Finestra extends JFrame implements WindowListener {
 	private BodiesSelection bs;
 	private PlanetSelection ps;
 	private BodyDesc bd;
-	private BodiesList ml;
+	private BodiesList bl;
 
 
 
@@ -62,10 +62,10 @@ public class Finestra extends JFrame implements WindowListener {
 		bd.setVisible(false);
 		contentPane.add(bd);
 		
-		ml=new BodiesList();
-		ml.setBounds(0, 0, 1170, 861);
-		ml.setVisible(false);
-		contentPane.add(ml);
+		bl=new BodiesList();
+		bl.setBounds(0, 0, 1170, 861);
+		bl.setVisible(false);
+		contentPane.add(bl);
 		
 		setVisible(true);
 	}
@@ -120,14 +120,14 @@ public class Finestra extends JFrame implements WindowListener {
 
 
 
-	public BodiesList getMl() {
-		return ml;
+	public BodiesList getBl() {
+		return bl;
 	}
 
 
 
-	public void setMl(BodiesList ml) {
-		this.ml = ml;
+	public void setBl(BodiesList bl) {
+		this.bl = bl;
 	}
 
 	@Override
