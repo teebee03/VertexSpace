@@ -251,6 +251,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener
 			int row = f.getMl().getTableOfMoons().getSelectedRow();
 			if (row>=0)
 			{
+				f.getMl().getTableOfMoons().clearSelection();
 				f.getMl().setVisible(false);
 				f.getBd().getLblBodyImage().setIcon(null);
 				urlB = ""+f.getMl().getTableOfMoons().getModel().getValueAt(row, 0);

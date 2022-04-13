@@ -56,6 +56,7 @@ public class BodiesList extends JPanel
 		tableOfMoons.getTableHeader().setBackground(Color.ORANGE);
 		
 		tableOfMoons.setRowSelectionAllowed(false);
+		tableOfMoons.setFocusable(false);
 		tableOfMoons.setRowHeight(27);
 		tableOfMoons.setFont(new Font("Tahoma", Font.BOLD, 19));
 		tableOfMoons.setForeground(Color.ORANGE);
