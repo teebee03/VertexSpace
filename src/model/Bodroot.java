@@ -247,14 +247,6 @@ public class Bodroot
 									+ ((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(1)).getValue();
 						}
 					}
-					else if(fields[i].get(bodies.get(0)).getClass() == Moons.class)
-					{
-						//if(((JAXBElement)(Moons)fields[i].get(bodies.get(0)).getContent().get(0)).getValue())
-						//{
-							
-							//value = ""+;
-						//}
-					}
 				}
 				else
 					value = ""+fields[i].get(bodies.get(0));
@@ -316,14 +308,6 @@ public class Bodroot
 									+" x 10^"
 									+ ((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(1)).getValue();
 						}
-					}
-					else if(fields[i].get(bodies.get(0)).getClass() == Moons.class)
-					{
-						//if(((JAXBElement)(Moons)fields[i].get(bodies.get(0)).getContent().get(0)).getValue())
-						//{
-							
-							//value = ""+;
-						//}
 					}
 				}
 				else

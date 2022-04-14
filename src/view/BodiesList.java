@@ -27,10 +27,13 @@ public class BodiesList extends JPanel
 	
 	private Image img;
 	private JScrollPane scrollPane;
-	private JTable tableOfMoons;
+	private JTable tableOfBodies;
 	private JButton btnBack;
-	private JTextField searchField;
-	private JLabel lblFilter;
+	private JTextField searchArField;
+	private JTextField searchBodyField;
+	private JLabel lblAroundPlanet;
+	private JLabel lblBody;
+	private JLabel lblSearch;
 
 	/**
 	 * Create the panel.
@@ -44,10 +47,10 @@ public class BodiesList extends JPanel
 		setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(360, 30, 460, 756);
+		scrollPane.setBounds(310, 30, 460, 756);
 		add(scrollPane);
 		
-		tableOfMoons = new JTable(){
+		tableOfBodies = new JTable(){
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -56,18 +59,18 @@ public class BodiesList extends JPanel
 				return false;
 			}
 		};
-		tableOfMoons.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 19));
-		tableOfMoons.getTableHeader().setForeground(Color.BLACK);
-		tableOfMoons.getTableHeader().setOpaque(false);
-		tableOfMoons.getTableHeader().setBackground(Color.ORANGE);
-		tableOfMoons.setRowSelectionAllowed(false);
-		tableOfMoons.setFocusable(false);
-		tableOfMoons.setRowHeight(27);
-		tableOfMoons.setFont(new Font("Tahoma", Font.BOLD, 19));
-		tableOfMoons.setForeground(Color.ORANGE);
-		tableOfMoons.setOpaque(false);
-		((DefaultTableCellRenderer)tableOfMoons.getDefaultRenderer(Object.class)).setOpaque(false);
-		scrollPane.setViewportView(tableOfMoons);
+		tableOfBodies.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 19));
+		tableOfBodies.getTableHeader().setForeground(Color.BLACK);
+		tableOfBodies.getTableHeader().setOpaque(false);
+		tableOfBodies.getTableHeader().setBackground(Color.ORANGE);
+		tableOfBodies.setRowSelectionAllowed(false);
+		tableOfBodies.setFocusable(false);
+		tableOfBodies.setRowHeight(27);
+		tableOfBodies.setFont(new Font("Tahoma", Font.BOLD, 19));
+		tableOfBodies.setForeground(Color.ORANGE);
+		tableOfBodies.setOpaque(false);
+		((DefaultTableCellRenderer)tableOfBodies.getDefaultRenderer(Object.class)).setOpaque(false);
+		scrollPane.setViewportView(tableOfBodies);
 		scrollPane.getViewport().setOpaque(false);
 		scrollPane.setOpaque(false);
 		
@@ -81,23 +84,44 @@ public class BodiesList extends JPanel
 		btnBack.setBorder(null);
 		btnBack.setBackground(Color.BLACK);
 		btnBack.setBounds(39, 734, 126, 90);
-		add(btnBack);
+		add(btnBack);	
 		
-		searchField = new JTextField();
-		searchField.setBounds(930, 758, 200, 27);
-		searchField.setFont(new Font("Tahoma", Font.BOLD, 19));
-		searchField.setForeground(Color.ORANGE);
-		searchField.setOpaque(false);
-		searchField.setVisible(false);
-		add(searchField);
+		searchBodyField = new JTextField();
+		searchBodyField.setBounds(924, 759, 200, 27);
+		searchBodyField.setFont(new Font("Tahoma", Font.BOLD, 19));
+		searchBodyField.setForeground(Color.ORANGE);
+		searchBodyField.setOpaque(false);
+		add(searchBodyField);
 		
-		lblFilter = new JLabel("Filter:");
-		lblFilter.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblFilter.setForeground(Color.ORANGE);
-		lblFilter.setFont(new Font("Tahoma", Font.BOLD, 19));
-		lblFilter.setBounds(851, 759, 73, 24);
-		lblFilter.setVisible(false);
-		add(lblFilter);
+		searchArField = new JTextField();
+		searchArField.setBounds(924, 797, 200, 27);
+		searchArField.setFont(new Font("Tahoma", Font.BOLD, 19));
+		searchArField.setForeground(Color.ORANGE);
+		searchArField.setOpaque(false);
+		searchArField.setVisible(false);
+		add(searchArField);
+		
+		lblBody = new JLabel("Body:");
+		lblBody.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblBody.setForeground(Color.ORANGE);
+		lblBody.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblBody.setBounds(818, 760, 100, 24);
+		add(lblBody);
+		
+		lblAroundPlanet = new JLabel("Around Planet:");
+		lblAroundPlanet.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblAroundPlanet.setForeground(Color.ORANGE);
+		lblAroundPlanet.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblAroundPlanet.setBounds(818, 798, 100, 24);
+		lblAroundPlanet.setVisible(false);
+		add(lblAroundPlanet);
+		
+		lblSearch = new JLabel("SEARCH");
+		lblSearch.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSearch.setForeground(Color.ORANGE);
+		lblSearch.setFont(new Font("Tahoma", Font.BOLD, 19));
+		lblSearch.setBounds(961, 727, 126, 24);
+		add(lblSearch);
 		
 	}
 
@@ -109,8 +133,8 @@ public class BodiesList extends JPanel
 		this.scrollPane = scrollPane;
 	}
 
-	public JTable getTableOfMoons() {
-		return tableOfMoons;
+	public JTable getTableOfBodies() {
+		return tableOfBodies;
 	}
 
 	public JButton getBtnBack() {
@@ -121,24 +145,40 @@ public class BodiesList extends JPanel
 		this.btnBack = btnBack;
 	}
 
-	public void setTableOfMoons(JTable tableOfMoons) {
-		this.tableOfMoons = tableOfMoons;
+	public void setTableOfBodies(JTable tableOfBodies) {
+		this.tableOfBodies = tableOfBodies;
 	}
 
-	public JTextField getSearchField() {
-		return searchField;
+	public JTextField getSearchArField() {
+		return searchArField;
 	}
 
-	public void setSearchField(JTextField searchField) {
-		this.searchField = searchField;
+	public void setSearchArField(JTextField searchArField) {
+		this.searchArField = searchArField;
 	}
 
-	public JLabel getLblFilter() {
-		return lblFilter;
+	public JTextField getSearchBodyField() {
+		return searchBodyField;
 	}
 
-	public void setLblFilter(JLabel lblFilter) {
-		this.lblFilter = lblFilter;
+	public void setSearchBodyField(JTextField searchBodyField) {
+		this.searchBodyField = searchBodyField;
+	}
+
+	public JLabel getLblAroundPlanet() {
+		return lblAroundPlanet;
+	}
+
+	public void setLblAroundPlanet(JLabel lblAroundPlanet) {
+		this.lblAroundPlanet = lblAroundPlanet;
+	}
+
+	public JLabel getLblBody() {
+		return lblBody;
+	}
+
+	public void setLblBody(JLabel lblBody) {
+		this.lblBody = lblBody;
 	}
 
 	private void loadImage(Image img)

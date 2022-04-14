@@ -86,6 +86,8 @@ public class BodyDesc extends JPanel {
 				return false;
 			}
 		};
+		tableBodyDesc.setRowSelectionAllowed(false);
+		tableBodyDesc.setFocusable(false);
 		tableBodyDesc.setRowHeight(27);
 		tableBodyDesc.setShowVerticalLines(false);
 		tableBodyDesc.setRowSelectionAllowed(false);
