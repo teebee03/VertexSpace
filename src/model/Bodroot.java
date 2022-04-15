@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBElement;
@@ -27,7 +28,6 @@ import javax.xml.bind.annotation.XmlType;
 
 import model.Bodroot.Bodies.AroundPlanet;
 import model.Bodroot.Bodies.Mass;
-import model.Bodroot.Bodies.Moons;
 import model.Bodroot.Bodies.Vol;
 
 
@@ -195,13 +195,23 @@ public class Bodroot
         }
         return this.bodies;
     }
-    /**
-     * Metodo che, prendendo i dati del corpo, crea una tabella che lo descrive
-     * 
+
+
+	/**
+	 * Metodo che crea il modello di una tabella in cui il campo AroundPlanet e' vuoto, contenente tutti i dati relativi al Body
      * @return Modello della tabella con i dati inseriti
      */
     public DefaultTableModel printBodyTable()
 	{
+    	List<String >units = Arrays.asList(
+    			new String[]
+    			{
+	    			"", "", " km", " km", " km", "",
+	    			"°", " kg", " km\u00B3", " g/cm\u00B3", " m/s\u00B2"," m/s",
+	    			" km", " km", " km", "", " km", " days",
+	    			" h", "", "", "", "", "°",
+	    			" K", "°", "°", "°", ""
+    			});
 		DefaultTableModel model=new DefaultTableModel();
 		model.addColumn("Data");
 		model.addColumn("Value");
@@ -210,6 +220,7 @@ public class Bodroot
 		String firstCap="";
 		String field="";
 		String value="";
+		
 		for(int i=0;i<fields.length-4;i++)
 		{
 			try
@@ -234,8 +245,8 @@ public class Bodroot
 						if(((Mass)fields[i].get(bodies.get(0))).getContent().size() != 1)
 						{
 							value = ""+((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(1)).getValue()
-									+" x 10^"
-									+ ((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
+									+" x 10"
+									+ exponentize(""+((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(0)).getValue());
 						}
 					}
 					else if(fields[i].get(bodies.get(0)).getClass() == Vol.class)
@@ -243,8 +254,8 @@ public class Bodroot
 						if(((Vol)fields[i].get(bodies.get(0))).getContent().size() != 1)
 						{
 							value = ""+((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(0)).getValue()
-									+" x 10^"
-									+ ((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(1)).getValue();
+									+" x 10"
+									+ exponentize(""+((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(1)).getValue());
 						}
 					}
 				}
@@ -252,7 +263,10 @@ public class Bodroot
 					value = ""+fields[i].get(bodies.get(0));
 				
 				if(value!="")
+				{
+					value += units.get(i);
 					model.addRow(new String[]{field,value});
+				}
 			}
 			catch (IllegalArgumentException | IllegalAccessException e)
 			{
@@ -262,8 +276,21 @@ public class Bodroot
 		return model;
 	}
     
+    /**
+	 * Metodo che crea il modello di una tabella, contenente tutti i dati relativi al Body
+     * @return Modello della tabella con i dati inseriti
+     */
     public DefaultTableModel printBodyTable(Bodroot engNames)
 	{
+    	List<String >units = Arrays.asList(
+    			new String[]
+    			{
+	    			"", "", " km", " km", " km", "",
+	    			"°", " kg", " km\u00B3", " g/cm\u00B3", " m/s\u00B2"," m/s",
+	    			" km", " km", " km", "", " km", " days",
+	    			" h", "", "", "", "", "°",
+	    			" K", "°", "°", "°", ""
+    			});
 		DefaultTableModel model=new DefaultTableModel();
 		model.addColumn("Data");
 		model.addColumn("Value");
@@ -296,8 +323,8 @@ public class Bodroot
 						if(((Mass)fields[i].get(bodies.get(0))).getContent().size() != 1)
 						{
 							value = ""+((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(1)).getValue()
-									+" x 10^"
-									+ ((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
+									+" x 10"
+									+ exponentize(""+((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(0)).getValue());
 						}
 					}
 					else if(fields[i].get(bodies.get(0)).getClass() == Vol.class)
@@ -305,8 +332,8 @@ public class Bodroot
 						if(((Vol)fields[i].get(bodies.get(0))).getContent().size() != 1)
 						{
 							value = ""+((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(0)).getValue()
-									+" x 10^"
-									+ ((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(1)).getValue();
+									+" x 10"
+									+ exponentize(""+((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(1)).getValue());
 						}
 					}
 				}
@@ -314,7 +341,10 @@ public class Bodroot
 					value = ""+fields[i].get(bodies.get(0));
 				
 				if(value!="")
+				{
+					value += units.get(i);
 					model.addRow(new String[]{field,value});
+				}
 			}
 			catch (IllegalArgumentException | IllegalAccessException e)
 			{
@@ -324,14 +354,36 @@ public class Bodroot
 		return model;
 	}
     
-    public DefaultTableModel printBodiesList(Bodroot englishNames) //gestire multi invio di engNames
+    /**
+     * Metodo che crea il modello di una tabella in cui il campo AroundPlanet e' vuoto, contenente il nome dei Body (solitamente di tipo Planet)
+     * @return Modello della tabella con i dati inseriti
+     */
+    public DefaultTableModel printBodiesList()
+   	{
+   		DefaultTableModel model=new DefaultTableModel();
+   		model.addColumn("Id");
+   		model.addColumn("Name");
+   		
+   		for(int i=0;i<bodies.size();i++)
+   		{
+   			model.addRow(new String[]{bodies.get(i).getId(), bodies.get(i).getEnglishName()});
+   			
+   		}
+   		return model;
+   	}
+    
+    /**
+     * Metodo che crea il modello di una tabella, contenente il nome dei Body di tipo Moon e attorno a quale Body ruotano
+     * @param englishNames Nomi inglesi dei Body che possiedono Moons (solitamente di tipo Planet)
+     * @return Modello della tabella con i dati inseriti
+     */
+    public DefaultTableModel printBodiesList(Bodroot englishNames)
 	{
 		DefaultTableModel model=new DefaultTableModel();
 		model.addColumn("Id");
 		model.addColumn("Name");
 		model.addColumn("Around Planet");
 
-		
 		for(int i=0;i<bodies.size();i++)
 		{
 			int j=0;
@@ -352,21 +404,40 @@ public class Bodroot
 		return model;
 	}
     
-    public DefaultTableModel printBodiesListNoMoon()
-   	{
-   		DefaultTableModel model=new DefaultTableModel();
-   		model.addColumn("Id");
-   		model.addColumn("Name");
-   		
-   		for(int i=0;i<bodies.size();i++)
-   		{
-   			model.addRow(new String[]{bodies.get(i).getId(), bodies.get(i).getEnglishName()});
-   			
-   		}
-   		return model;
-   	}
     
-
+    /**
+     * Metodo che trasforma una stringa contenente un numero in una stringa contenente un esponente
+     * @param num Stringa da trasformare
+     * @return Stringa contenente il corrispondente esponente
+     */
+    private String exponentize(String num)
+    {
+    	String exp="";
+    	for(int i=0;i<num.length();i++)
+    	{
+    		if(num.charAt(i)=='1')
+    			exp+="\u00B9";
+    		else if(num.charAt(i)=='2')
+    			exp+="\u00B2";
+    		else if(num.charAt(i)=='3')
+    			exp+="\u00B3";
+    		else if(num.charAt(i)=='4')
+    			exp+="\u2074";
+    		else if(num.charAt(i)=='5')
+    			exp+="\u2075";
+    		else if(num.charAt(i)=='6')
+    			exp+="\u2076";
+    		else if(num.charAt(i)=='7')
+    			exp+="\u2077";
+    		else if(num.charAt(i)=='8')
+    			exp+="\u2078";
+    		else if(num.charAt(i)=='9')
+    			exp+="\u2079";
+    		else if(num.charAt(i)=='0')
+    			exp+="\u2070";
+    	}
+    	return exp;
+    }
     /**
      * <p>Classe Java per anonymous complex type.
      * 

@@ -23,15 +23,18 @@ import javax.swing.JButton;
 
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.BorderLayout;
 
 public class BodyDesc extends JPanel {
 	
 	private Image img;
+	private JPanel componentsContainter1;
 	private JTable tableBodyDesc;
-	private JButton btnBack;
 	private JScrollPane scrollPane;
-	private JPanel componentsContainter;
+	private JPanel componentsContainter2;
 	private JLabel lblBodyImage;
+	private JButton btnBack;
+	private JLabel lblWarning;
 	/**
 	 * Create the panel.
 	 */
@@ -48,10 +51,10 @@ public class BodyDesc extends JPanel {
 		setBounds(0, 0, 1170, 861);
 		setLayout(new GridLayout(1, 2, 0, 0));
 		
-		componentsContainter = new JPanel();
-		add(componentsContainter);
-		componentsContainter.setLayout(null);
-		componentsContainter.setOpaque(false);
+		componentsContainter1 = new JPanel();
+		add(componentsContainter1);
+		componentsContainter1.setLayout(null);
+		componentsContainter1.setOpaque(false);
 		
 		lblBodyImage = new JLabel();
 		if(body!=null)
@@ -63,7 +66,7 @@ public class BodyDesc extends JPanel {
 		lblBodyImage.setBounds(36, 174, 512, 512);
 		lblBodyImage.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		componentsContainter.add(lblBodyImage);
+		componentsContainter1.add(lblBodyImage);
 		
 		URL imageUrl=ClassLoader.getSystemResource("images/back.png");
 		Icon icon = new ImageIcon(imageUrl);
@@ -75,7 +78,12 @@ public class BodyDesc extends JPanel {
 		btnBack.setBorder(null);
 		btnBack.setBackground(Color.BLACK);
 		btnBack.setBounds(39, 734, 126, 90);
-		componentsContainter.add(btnBack);
+		componentsContainter1.add(btnBack);
+		
+		
+		componentsContainter2 = new JPanel();
+		add(componentsContainter2);
+		componentsContainter2.setOpaque(false);
 		
 		tableBodyDesc = new JTable(){
 			private static final long serialVersionUID = 1L;
@@ -90,12 +98,18 @@ public class BodyDesc extends JPanel {
 		tableBodyDesc.setFocusable(false);
 		tableBodyDesc.setRowHeight(27);
 		tableBodyDesc.setShowVerticalLines(false);
-		tableBodyDesc.setRowSelectionAllowed(false);
 		tableBodyDesc.setFont(new Font("Tahoma", Font.BOLD, 19));
 		tableBodyDesc.setForeground(Color.ORANGE);
 		tableBodyDesc.setOpaque(false);
 		((DefaultTableCellRenderer)tableBodyDesc.getDefaultRenderer(Object.class)).setOpaque(false);
-		add(tableBodyDesc);
+		componentsContainter2.setLayout(new BorderLayout(0, 0));
+		componentsContainter2.add(tableBodyDesc,BorderLayout.NORTH);
+		
+		lblWarning = new JLabel("Some data may not be provided!");
+		lblWarning.setFont(new Font("Tahoma", Font.ITALIC, 21));
+		lblWarning.setForeground(Color.WHITE);
+		lblWarning.setHorizontalAlignment(SwingConstants.CENTER);
+		componentsContainter2.add(lblWarning, BorderLayout.CENTER);
 	}
 	public JTable getTableBodyDesc() {
 		return tableBodyDesc;
@@ -109,11 +123,17 @@ public class BodyDesc extends JPanel {
 	public void setScrollPane(JScrollPane scrollPane) {
 		this.scrollPane = scrollPane;
 	}
-	public JPanel getComponentsContainter() {
-		return componentsContainter;
+	public JPanel getComponentsContainter1() {
+		return componentsContainter1;
 	}
-	public void setComponentsContainter(JPanel componentsContainter) {
-		this.componentsContainter = componentsContainter;
+	public void setComponentsContainter1(JPanel componentsContainter1) {
+		this.componentsContainter1 = componentsContainter1;
+	}
+	public JPanel getComponentsContainter2() {
+		return componentsContainter2;
+	}
+	public void setComponentsContainter2(JPanel componentsContainter2) {
+		this.componentsContainter2 = componentsContainter2;
 	}
 	public JLabel getLblBodyImage() {
 		return lblBodyImage;

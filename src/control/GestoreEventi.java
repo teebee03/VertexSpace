@@ -1,14 +1,11 @@
 package control;
 
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
-import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -82,7 +79,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 			{
 				urlB="?filter[]=bodyType,eq,Dwarf%20Planet&data=id,englishName,bodyType";
 				bodiesReq=api.makeBodies(urlB);
-				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesListNoMoon());
+				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesList());
 				f.getBl().getTableOfBodies().removeColumn(f.getBl().getTableOfBodies().getColumnModel().getColumn(0));
 			}
 			TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfBodies().getModel());
@@ -97,7 +94,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 			{
 				urlB="?filter[]=bodyType,eq,Comet&data=id,englishName,bodyType";
 				bodiesReq=api.makeBodies(urlB);
-				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesListNoMoon());
+				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesList());
 				f.getBl().getTableOfBodies().removeColumn(f.getBl().getTableOfBodies().getColumnModel().getColumn(0));
 			}
 			TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfBodies().getModel());
@@ -112,7 +109,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 			{
 				urlB="?filter[]=bodyType,eq,Asteroid&data=id,englishName,bodyType";
 				bodiesReq=api.makeBodies(urlB);
-				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesListNoMoon());
+				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesList());
 				f.getBl().getTableOfBodies().removeColumn(f.getBl().getTableOfBodies().getColumnModel().getColumn(0));
 			}
 			TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfBodies().getModel());
@@ -163,9 +160,9 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 		if(e.getSource()==f.getBs().getBtnPlanets()) //da Bs a Ps (planets)
 		{
 			f.getBs().setVisible(false);
-			if(urlB!="?filter[]=isPlanet,eq,true&order=aphelion&data=id,englishName,isPlanet")
+			if(urlB!="?filter[]=isPlanet,eq,true&order=aphelion&data=id,englishName,isPlanet,bodyType")
 			{
-				urlB="?filter[]=isPlanet,eq,true&order=aphelion&data=id,englishName,isPlanet";
+				urlB="?filter[]=isPlanet,eq,true&order=aphelion&data=id,englishName,isPlanet,bodyType";
 				bodiesReq=api.makeBodies(urlB);
 			}
 			ButtonImageText(bodiesReq,currI);
@@ -216,21 +213,21 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 			Icon icon = new ImageIcon(imageUrl);
 			f.getBd().getLblBodyImage().setIcon(icon);
 			Bodroot body=api.makeBodies(currPlanetName.getId());
+			
 			//count moons
 			Bodroot moons =api.makeBodies("?filter[]=bodyType,eq,Moon&data=id,englishName,aroundPlanet,planet");
 			int counter =0;
 			for (int i = 0; i < moons.getBodies().size(); i++) 
 			{
 				if (body.getBodies().get(0).getId().equals(((JAXBElement)moons.getBodies().get(i).getAroundPlanet().getContent().get(0)).getValue()))
-				{
 					counter++;
-				}
 			}
 			
 			DefaultTableModel model = body.printBodyTable();
 			model.insertRow(1,new String[]{"Moons:",""+counter} );
 			
 			f.getBd().getTableBodyDesc().setModel(model);
+			f.getBd().getTableBodyDesc().getColumnModel().getColumn(0).setPreferredWidth(5);
 			f.getBd().setVisible(true);
 		}		
 		
@@ -247,17 +244,14 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 		}
 		
 		/***BodiesList***/
-		if(e.getSource()==f.getBl().getBtnBack()) //da Bl a (Bs o Bd)
+		if(e.getSource()==f.getBl().getBtnBack()) //da Bl a Bs
 		{
 			f.getBl().setVisible(false);
 			f.getBl().getSearchBodyField().setText("");
-			if(bodiesReq.getBodies().get(0).getBodyType().equals("Moon"))
-			{
-				f.getBl().getSearchArField().setText("");
-				f.getBl().getSearchArField().setVisible(false);
-				f.getBl().getLblAroundPlanet().setVisible(false);
-				currI=0;
-			}
+			f.getBl().getSearchArField().setText("");
+			f.getBl().getSearchArField().setVisible(false);
+			f.getBl().getLblAroundPlanet().setVisible(false);
+			currI=0;
 			f.getBl().getTableOfBodies().setRowSorter(null);
 			f.getBs().setVisible(true);
 		}
@@ -277,11 +271,10 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 		if(e.getSource()==f.getBl().getTableOfBodies().getSelectionModel()) //da Bl a Bd
 		{
 			int rowF = f.getBl().getTableOfBodies().getSelectedRow();
-			
+			f.getBl().getTableOfBodies().clearSelection();
 			if (rowF>=0)
 			{
 				int row = f.getBl().getTableOfBodies().getRowSorter().convertRowIndexToModel(rowF);
-				f.getBl().getTableOfBodies().clearSelection();
 				f.getBl().setVisible(false);
 				f.getBd().getLblBodyImage().setIcon(null);
 				urlB = ""+f.getBl().getTableOfBodies().getModel().getValueAt(row, 0);
@@ -321,18 +314,19 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 				}
 				else
 					f.getBd().getTableBodyDesc().setModel(bodiesReq.printBodyTable());
+				f.getBd().getTableBodyDesc().getColumnModel().getColumn(0).setPreferredWidth(8);
 				f.getBd().setVisible(true);
 			}
 		
 		}
 		
-		if(e.getSource()==f.getBd().getTableBodyDesc().getSelectionModel()) //da Bd a Bl
+		if(e.getSource()==f.getBd().getTableBodyDesc().getSelectionModel()) //da Bd a Bl (see moons from planet)
 		{
 			int row = f.getBd().getTableBodyDesc().getSelectedRow();
-			if(row==1)
+			if(row==1 && f.getBd().getTableBodyDesc().getValueAt(row, 0).equals("Moons:") && !f.getBd().getTableBodyDesc().getValueAt(row, 1).equals("0"))
 			{
-				f.getBd().getTableBodyDesc().clearSelection();
 				f.getBd().setVisible(false);
+				f.getBd().getTableBodyDesc().clearSelection();
 				int k=0;
 				boolean flag=false;
 				while(k<bodiesReq.getBodies().size() && !flag)
@@ -344,11 +338,11 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 				}
 				String id = bodiesReq.getBodies().get(k).getId();
 				urlB="?filter[]=aroundPlanet,eq,"+id+"&data=id,englishName,aroundPlanet,planet,rel,bodyType";
-				bodiesReq=api.makeBodies(urlB);
+				Bodroot moons=api.makeBodies(urlB);
 				
 				String link="?filter[]=isPlanet,eq,true&data=id,englishName";
 				Bodroot engNames = api.makeBodies(link);
-				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesList(engNames));
+				f.getBl().getTableOfBodies().setModel(moons.printBodiesList(engNames));
 				f.getBl().getTableOfBodies().removeColumn(f.getBl().getTableOfBodies().getColumnModel().getColumn(0));
 				TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfBodies().getModel());
 				f.getBl().getTableOfBodies().setRowSorter(ts);

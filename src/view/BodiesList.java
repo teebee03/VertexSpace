@@ -12,7 +12,6 @@ import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.net.URL;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -47,7 +46,7 @@ public class BodiesList extends JPanel
 		setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(310, 30, 460, 756);
+		scrollPane.setBounds(305, 30, 460, 756);
 		add(scrollPane);
 		
 		tableOfBodies = new JTable(){
@@ -65,6 +64,7 @@ public class BodiesList extends JPanel
 		tableOfBodies.getTableHeader().setBackground(Color.ORANGE);
 		tableOfBodies.setRowSelectionAllowed(false);
 		tableOfBodies.setFocusable(false);
+		tableOfBodies.getTableHeader().setReorderingAllowed(false);
 		tableOfBodies.setRowHeight(27);
 		tableOfBodies.setFont(new Font("Tahoma", Font.BOLD, 19));
 		tableOfBodies.setForeground(Color.ORANGE);

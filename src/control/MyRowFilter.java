@@ -13,11 +13,13 @@ public class MyRowFilter extends RowFilter
 		this.filterTextAr = filterTextAr;
 	}
 
-
 	@Override
 	public boolean include(Entry entry)
 	{
-		return entry.getStringValue(1).indexOf(filterTextB) >= 0 && entry.getStringValue(2).indexOf(filterTextAr) >= 0;
+		if(entry.getValueCount()==3)
+			return entry.getStringValue(1).indexOf(filterTextB) >= 0 && entry.getStringValue(2).indexOf(filterTextAr) >= 0;
+		else
+			return entry.getStringValue(1).indexOf(filterTextB) >= 0;
 	}
 
 }
