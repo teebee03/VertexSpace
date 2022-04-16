@@ -256,8 +256,8 @@ public class Bodroot
 				}
 				else
 					value = ""+fields[i].get(bodies.get(0));
-				
-				if(value!="")
+				System.out.println(value+" - ");
+				if(!value.equals(""))
 				{
 					value += units.get(i);
 					model.addRow(new String[]{field,value});
@@ -335,7 +335,7 @@ public class Bodroot
 				else
 					value = ""+fields[i].get(bodies.get(0));
 				
-				if(value!="")
+				if(!value.equals(""))
 				{
 					value += units.get(i);
 					model.addRow(new String[]{field,value});
