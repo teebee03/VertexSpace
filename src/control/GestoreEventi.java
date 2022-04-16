@@ -18,6 +18,12 @@ import model.ApiCommunicator;
 import model.Bodroot;
 import view.Finestra;
 
+/**
+ * Gestisce gli eventi
+ * @author Alberti Lorenzo, Bertelli Tommaso
+ * @version 1.0.0
+ * @since 1.0
+ */
 public class GestoreEventi implements ActionListener,ListSelectionListener,DocumentListener
 {
 	private Finestra f;

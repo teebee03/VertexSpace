@@ -2,13 +2,20 @@ package control;
 
 import javax.swing.RowFilter;
 
+/**
+ * Crea un filtro per tabelle che controlla se il testo dato in input corrisponde al contenuto delle Entry della tabella
+ * @author Alberti Lorenzo, Bertelli Tommaso
+ * @version 1.0.0
+ * @since 1.0
+ */
 public class MyRowFilter extends RowFilter
 {
 	private String filterTextB;
 	private String filterTextAr;
 	
 	
-	public MyRowFilter(String filterTextB, String filterTextAr) {
+	public MyRowFilter(String filterTextB, String filterTextAr)
+	{
 		this.filterTextB = filterTextB;
 		this.filterTextAr = filterTextAr;
 	}

@@ -3,14 +3,18 @@ package view;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.ColorUIResource;
+
 import java.awt.Color;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.awt.BorderLayout;
 
-public class Finestra extends JFrame implements WindowListener {
+public class Finestra extends JFrame implements WindowListener
+{
 
 	private JPanel contentPane;
 	private FirstPage fp;
@@ -20,30 +24,28 @@ public class Finestra extends JFrame implements WindowListener {
 	private BodiesList bl;
 
 
-
 	/**
-	 * Create the frame.
+	 * Creazione della finestra
 	 * @throws InterruptedException 
 	 * @throws IOException 
 	 */
-	public Finestra() throws InterruptedException, IOException {
-		
-		
+	public Finestra() throws InterruptedException, IOException
+	{
 		setTitle("Vertex Space");
 		setResizable(false);
-		addWindowListener(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1180,900);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
+		addWindowListener(this);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+
+		putUIManagerDefault();
 		
-
-
 		fp = new FirstPage();
 		fp.setBounds(0, 0, 1170, 861);
 		contentPane.add(fp);
@@ -131,22 +133,20 @@ public class Finestra extends JFrame implements WindowListener {
 	}
 
 	@Override
-	public void windowOpened(WindowEvent e) {
-
-		try {
+	public void windowOpened(WindowEvent e)
+	{
+		try{
 			Thread.sleep(3000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
+		}catch (InterruptedException e1){
 			e1.printStackTrace();
 		}
 		fp.setVisible(false);
-		
 	}
 
 	@Override
 	public void windowClosing(WindowEvent e)
 	{
-		int check=JOptionPane.showConfirmDialog(this,"Sei sicuro di volere uscire?","Conferma",JOptionPane.YES_NO_OPTION);
+		int check=JOptionPane.showConfirmDialog(this,"Are you sure you want to exit?","Confirm Exit",JOptionPane.YES_NO_OPTION);
 		if(check==JOptionPane.YES_OPTION)
 		{
 			System.exit(0);
@@ -155,36 +155,33 @@ public class Finestra extends JFrame implements WindowListener {
 		{
 			this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		}
-		
 	}
 
 	@Override
-	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowClosed(WindowEvent e) {}
 
 	@Override
-	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowIconified(WindowEvent e) {}
 
 	@Override
-	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowDeiconified(WindowEvent e) {}
 
 	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void windowActivated(WindowEvent e) {}
 
 	@Override
-	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void windowDeactivated(WindowEvent e) {}
+	
+	/**
+	 * Stabilisce impostazioni di visualizzazione grafica (utile per modificare JOptionPane)
+	 */
+	private void putUIManagerDefault()
+	{
+		UIManager.put("OptionPane.background",Color.black);
+		UIManager.put("Panel.background",Color.black);
+		UIManager.put("OptionPane.messageForeground",Color.orange);
+		UIManager.put("Button.background", Color.orange);
+		UIManager.put("Button.foreground", Color.black);
+		UIManager.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
 	}
 }

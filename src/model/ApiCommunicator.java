@@ -1,5 +1,6 @@
 package model;
 import java.io.File;
+
 import java.io.FileWriter;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -11,21 +12,23 @@ import javax.xml.bind.Unmarshaller;
 
 import org.json.JSONObject;
 import org.json.XML;
-/***
- *Classe che abilita la comunicazione con l'api 
- * @author tommaso bertelli, lorenzo alberti
- *
+
+/**
+ * Abilita la comunicazione con l'API
+ * @author Alberti Lorenzo, Bertelli Tommaso
+ * @version 1.0.0
+ * @since 1.0
  */
 public class ApiCommunicator 
 {
 	public ApiCommunicator(){}
 	
 	/***
-	 * Metodo che permette di inviare richieste all'api e ottenere l'oggetto richiesto facendo la conversione da json ad xml e la sucessiva
+	 * Permette di inviare richieste all'api e ottenere l'oggetto richiesto facendo la conversione da json ad xml e la sucessiva
 	 * conversione ad oggetto
 	 * 
-	 * @param urlB stringa contenente il nome del corpo per cui filtrare la richiesta all'api, con possibili filtri
-	 * @return i corpi richiesti dall'api
+	 * @param urlB Stringa contenente il nome del Body per cui filtrare la richiesta all'api, con possibili filtri
+	 * @return un oggetto Bodroot contenente i Bodies con i dati richiesti all'API
 	 */
 	public Bodroot makeBodies(String urlB)
 	{
@@ -43,15 +46,13 @@ public class ApiCommunicator
 			
 			String responseString = "";
 			if (response.statusCode() == 200) 
-			{
 				responseString = response.body();
-			}
-			else 
-			{
-				System.out.println("Error 200 not ok");
-			}
+			else
+				System.out.println("Error 200");
+			
 			//creazione di un oggetto json
 			JSONObject json = new JSONObject(responseString);
+			
 			//conversione da json ad xml e correzione
 			xml = XML.toString(json);
 			if(urlB.charAt(0)!='?')
@@ -62,7 +63,8 @@ public class ApiCommunicator
 			FileWriter fo = new FileWriter(f);
 			fo.write(xml);
 			fo.close();
-			//creazione di un oggetto di tipo bodroot (oggetto radice)
+			
+			//creazione di un oggetto di tipo Bodroot (oggetto radice)
 			JAXBContext context = JAXBContext.newInstance(Bodroot.class);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			bod = (Bodroot) unmarshaller.unmarshal(f);
@@ -71,7 +73,7 @@ public class ApiCommunicator
 		}
 		catch (Exception e) 
 		{
-			System.out.println("Error");
+			System.out.println("Connection Error");
 			e.printStackTrace();
 		}
 		return bod;

@@ -10,9 +10,18 @@ import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.net.URL;
 
-public class FirstPage extends JPanel{
+/**
+ * Crea un pannello che viene mostrato per n secondi
+ * @author Alberti Lorenzo, Bertelli Tommaso
+ * @version 1.0.0
+ * @since 1.0
+ */
+public class FirstPage extends JPanel
+{
+	
 	private Image img;
 
+	
 	/**
 	 * Create the panel.
 	 */
@@ -20,27 +29,14 @@ public class FirstPage extends JPanel{
 	{
 		URL imageUrlBg=ClassLoader.getSystemResource("images/firstPageBgCompl.jpg");
 		img=Toolkit.getDefaultToolkit().createImage(imageUrlBg);
-		this.loadImage(img);
+		UsefulMethods.loadImage(img,this);
 		
 		setBackground(Color.BLACK);
 		setBounds(0, 0, 1170, 861);
 		setLayout(null);
 	}
 	
-	private void loadImage(Image img)
-	{
-	    try
-	    {
-	      MediaTracker track = new MediaTracker(this);
-	      track.addImage(img, 0);
-	      track.waitForID(0);
-	    }
-	    catch (InterruptedException e)
-	    {
-	      e.printStackTrace();
-	    }
-	 }
-	
+	@Override
 	protected void paintComponent(Graphics g)
 	{
 	    setOpaque(false);

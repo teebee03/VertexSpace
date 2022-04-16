@@ -14,17 +14,22 @@ import model.Bodroot;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.MediaTracker;
 import java.awt.Toolkit;
 
-public class PlanetSelection extends JPanel {
+/**
+ * Crea un pannello che contiene un menu grafico contenente i Body di tipo Planet
+ * @author Alberti Lorenzo, Bertelli Tommaso
+ * @version 1.0.0
+ * @since 1.0
+ */
+public class PlanetSelection extends JPanel
+{
 
 	private Image img;
 	private JButton btnPlanet;
 	private JButton btnLeft;
 	private JButton btnRight;
 	private JButton btnBack;
-	
 	
 	
 	/**
@@ -35,7 +40,7 @@ public class PlanetSelection extends JPanel {
 	{
 		URL imageUrlBg=ClassLoader.getSystemResource("images/spaceBg.jpg");
 		img=Toolkit.getDefaultToolkit().createImage(imageUrlBg);
-		this.loadImage(img);
+		UsefulMethods.loadImage(img,this);
 		setBounds(0, 0, 1170, 861);
 		setLayout(null);
 		
@@ -49,7 +54,6 @@ public class PlanetSelection extends JPanel {
 		}
 		btnPlanet.setFont(new Font("Tahoma", Font.BOLD, 39));
 		btnPlanet.setForeground(Color.ORANGE);
-		btnPlanet.setBackground(Color.BLACK);
 		btnPlanet.setHorizontalTextPosition(JButton.CENTER);
 		btnPlanet.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnPlanet.setBounds(329, 131, 512, 601);
@@ -60,7 +64,6 @@ public class PlanetSelection extends JPanel {
 		
 		btnLeft = new JButton("<");
 		btnLeft.setFont(new Font("Times New Roman", Font.BOLD, 99));
-		btnLeft.setBackground(Color.BLACK);
 		btnLeft.setForeground(Color.WHITE);
 		btnLeft.setBounds(131, 385, 90, 90);
 		btnLeft.setBorder(null);
@@ -70,7 +73,6 @@ public class PlanetSelection extends JPanel {
 		
 		btnRight = new JButton(">");
 		btnRight.setFont(new Font("Times New Roman", Font.BOLD, 99));
-		btnRight.setBackground(Color.BLACK);
 		btnRight.setForeground(Color.WHITE);
 		btnRight.setBounds(950, 385, 90, 90);
 		btnRight.setBorder(null);
@@ -78,16 +80,7 @@ public class PlanetSelection extends JPanel {
 		btnRight.setFocusPainted(false);
 		add(btnRight);
 		
-		URL imageUrl=ClassLoader.getSystemResource("images/back.png");
-		Icon icon = new ImageIcon(imageUrl);
-		btnBack = new JButton(icon);
-		btnBack.setForeground(Color.WHITE);
-		btnBack.setFont(new Font("Times New Roman", Font.BOLD, 99));
-		btnBack.setFocusPainted(false);
-		btnBack.setContentAreaFilled(false);
-		btnBack.setBorder(null);
-		btnBack.setBackground(Color.BLACK);
-		btnBack.setBounds(39, 734, 126, 90);
+		btnBack=UsefulMethods.backButton();
 		add(btnBack);
 		
 		
@@ -123,25 +116,13 @@ public class PlanetSelection extends JPanel {
 	public void setBtnBack(JButton btnBack) {
 		this.btnBack = btnBack;
 	}
-
-	private void loadImage(Image img)
-	{
-	    try
-	    {
-	      MediaTracker track = new MediaTracker(this);
-	      track.addImage(img, 0);
-	      track.waitForID(0);
-	    }
-	    catch (InterruptedException e)
-	    {
-	      e.printStackTrace();
-	    }
-	 }
 	
+	@Override
 	protected void paintComponent(Graphics g)
 	{
 	    setOpaque(false);
 	    g.drawImage(img, 0, 0, null);
 	    super.paintComponent(g);
 	}
+
 }

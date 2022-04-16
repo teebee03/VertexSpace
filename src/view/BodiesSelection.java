@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -16,7 +17,14 @@ import java.awt.Toolkit;
 import java.net.URL;
 import java.awt.Font;
 
-public class BodiesSelection extends JPanel {
+/**
+ * Crea un pannello che contiene i bottoni per visualizzare un preciso tipo di Body
+ * @author Alberti Lorenzo, Bertelli Tommaso
+ * @version 1.0.0
+ * @since 1.0
+ */
+public class BodiesSelection extends JPanel
+{
 
 	private Image img;
 	private JPanel gridPanel;
@@ -35,7 +43,7 @@ public class BodiesSelection extends JPanel {
 		
 		URL imageUrlBg=ClassLoader.getSystemResource("images/spaceBg.jpg");
 		img=Toolkit.getDefaultToolkit().createImage(imageUrlBg);
-		this.loadImage(img);
+		UsefulMethods.loadImage(img,this);
 		setBounds(0, 0, 1170, 861);
 		setLayout(null);
 		
@@ -46,22 +54,24 @@ public class BodiesSelection extends JPanel {
 		gridPanel.setLayout(new GridLayout(0, 2, 270, 80));
 		
 		
-		btnPlanets = createButton("Planets","mars");
+		UIManager.put("Button.select", Color.TRANSLUCENT);
+		
+		btnPlanets = createButton("Planets","mars",18);
 		gridPanel.add(btnPlanets);
 		
-		btnMoons = createButton("Moons","moon");
+		btnMoons = createButton("Moons","moon",18);
 		gridPanel.add(btnMoons);
 		
 		btnDwarfPlanets = createButton("Dwarf Planets","pluto",16);
 		gridPanel.add(btnDwarfPlanets);
 		
-		btnAsteroids = createButton("Asteroids","asteroid");
+		btnAsteroids = createButton("Asteroids","asteroid",18);
 		gridPanel.add(btnAsteroids);
 		
-		btnComets = createButton("Comets","comet hyakutake");
+		btnComets = createButton("Comets","comet hyakutake",18);
 		gridPanel.add(btnComets);
 		
-		btnStars = createButton("Stars","sun");
+		btnStars = createButton("Stars","sun",18);
 		gridPanel.add(btnStars);
 	}
 
@@ -135,20 +145,7 @@ public class BodiesSelection extends JPanel {
 		this.btnStars = btnStars;
 	}
 	
-	private void loadImage(Image img)
-	{
-	    try
-	    {
-	      MediaTracker track = new MediaTracker(this);
-	      track.addImage(img, 0);
-	      track.waitForID(0);
-	    }
-	    catch (InterruptedException e)
-	    {
-	      e.printStackTrace();
-	    }
-	 }
-	
+	@Override
 	protected void paintComponent(Graphics g)
 	{
 	    setOpaque(false);
@@ -156,6 +153,11 @@ public class BodiesSelection extends JPanel {
 	    super.paintComponent(g);
 	}
 	
+	/**
+	 * Crea un'icona
+	 * @param body Nome del Body di cui prelevare l'immagine
+	 * @return l'icona
+	 */
 	private Icon createButtonIcon(String body)
 	{
 		URL imageUrl=ClassLoader.getSystemResource("images/planets/"+body+".png");
@@ -164,19 +166,13 @@ public class BodiesSelection extends JPanel {
 		return icon;
 	}
 	
-	private JButton createButton(String text, String iconN)
-	{
-		JButton btn = new JButton(text);
-		btn.setForeground(Color.ORANGE);
-		btn.setBackground(Color.BLACK);
-		btn.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btn.setIcon(createButtonIcon(iconN));
-		btn.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btn.setHorizontalTextPosition(SwingConstants.CENTER);
-		btn.setFocusPainted(false);
-		return btn;
-	}
-	
+	/**
+	 * Crea un bottone 
+	 * @param text Testo per il bottone
+	 * @param iconN Icona per il bottone
+	 * @param fontSize Dimensione del Font del bottone
+	 * @return il bottone
+	 */
 	private JButton createButton(String text, String iconN, int fontSize)
 	{
 		JButton btn = new JButton(text);

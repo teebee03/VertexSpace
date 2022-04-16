@@ -25,7 +25,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.BorderLayout;
 
-public class BodyDesc extends JPanel {
+/**
+ * Crea un pannello che contiene i dati relativi a un Body
+ * @author Alberti Lorenzo, Bertelli Tommaso
+ * @version 1.0.0
+ * @since 1.0
+ */
+public class BodyDesc extends JPanel
+{
 	
 	private Image img;
 	private JPanel componentsContainter1;
@@ -35,19 +42,16 @@ public class BodyDesc extends JPanel {
 	private JLabel lblBodyImage;
 	private JButton btnBack;
 	private JLabel lblWarning;
+	
+	
 	/**
 	 * Create the panel.
-	 */
-	
-	/***
-	 * 
-	 * @param body
 	 */
 	public BodyDesc(Bodroot body)
 	{
 		URL imageUrlBg=ClassLoader.getSystemResource("images/spaceBg.jpg");
 		img=Toolkit.getDefaultToolkit().createImage(imageUrlBg);
-		this.loadImage(img);
+		UsefulMethods.loadImage(img,this);
 		setBounds(0, 0, 1170, 861);
 		setLayout(new GridLayout(1, 2, 0, 0));
 		
@@ -68,16 +72,7 @@ public class BodyDesc extends JPanel {
 		
 		componentsContainter1.add(lblBodyImage);
 		
-		URL imageUrl=ClassLoader.getSystemResource("images/back.png");
-		Icon icon = new ImageIcon(imageUrl);
-		btnBack = new JButton(icon);
-		btnBack.setForeground(Color.WHITE);
-		btnBack.setFont(new Font("Times New Roman", Font.BOLD, 99));
-		btnBack.setFocusPainted(false);
-		btnBack.setContentAreaFilled(false);
-		btnBack.setBorder(null);
-		btnBack.setBackground(Color.BLACK);
-		btnBack.setBounds(39, 734, 126, 90);
+		btnBack=UsefulMethods.backButton();
 		componentsContainter1.add(btnBack);
 		
 		
@@ -111,57 +106,56 @@ public class BodyDesc extends JPanel {
 		lblWarning.setHorizontalAlignment(SwingConstants.CENTER);
 		componentsContainter2.add(lblWarning, BorderLayout.CENTER);
 	}
+	
 	public JTable getTableBodyDesc() {
 		return tableBodyDesc;
 	}
+	
 	public void setTableBodyDesc(JTable tableBodyDesc) {
 		this.tableBodyDesc = tableBodyDesc;
 	}
+	
 	public JScrollPane getScrollPane() {
 		return scrollPane;
 	}
+	
 	public void setScrollPane(JScrollPane scrollPane) {
 		this.scrollPane = scrollPane;
 	}
+	
 	public JPanel getComponentsContainter1() {
 		return componentsContainter1;
 	}
+	
 	public void setComponentsContainter1(JPanel componentsContainter1) {
 		this.componentsContainter1 = componentsContainter1;
 	}
+	
 	public JPanel getComponentsContainter2() {
 		return componentsContainter2;
 	}
+	
 	public void setComponentsContainter2(JPanel componentsContainter2) {
 		this.componentsContainter2 = componentsContainter2;
 	}
+	
 	public JLabel getLblBodyImage() {
 		return lblBodyImage;
 	}
+	
 	public void setLblBodyImage(JLabel lblBodyimage) {
 		this.lblBodyImage = lblBodyimage;
 	}
+	
 	public JButton getBtnBack() {
 		return btnBack;
 	}
+	
 	public void setBtnBack(JButton btnBack) {
 		this.btnBack = btnBack;
 	}
 	
-	private void loadImage(Image img)
-	{
-	    try
-	    {
-	      MediaTracker track = new MediaTracker(this);
-	      track.addImage(img, 0);
-	      track.waitForID(0);
-	    }
-	    catch (InterruptedException e)
-	    {
-	      e.printStackTrace();
-	    }
-	 }
-	
+	@Override
 	protected void paintComponent(Graphics g)
 	{
 	    setOpaque(false);

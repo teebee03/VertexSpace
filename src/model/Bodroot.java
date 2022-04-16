@@ -157,11 +157,6 @@ import model.Bodroot.Bodies.Vol;
     "bodies"
 })
 @XmlRootElement(name = "bodroot")
-/**
- * Classe radice, contiene i corpi ricevuti dall'api con all'interno i dati richiesti
- * @author tommaso bertelli, lorenzo alberti
- *
- */
 public class Bodroot 
 {
 
@@ -198,8 +193,8 @@ public class Bodroot
 
 
 	/**
-	 * Metodo che crea il modello di una tabella in cui il campo AroundPlanet e' vuoto, contenente tutti i dati relativi al Body
-     * @return Modello della tabella con i dati inseriti
+	 * Crea il Model di una tabella in cui il campo AroundPlanet e' vuoto, contenente tutti i dati relativi al Body
+     * @return il Model della tabella con i dati inseriti
      */
     public DefaultTableModel printBodyTable()
 	{
@@ -277,8 +272,8 @@ public class Bodroot
 	}
     
     /**
-	 * Metodo che crea il modello di una tabella, contenente tutti i dati relativi al Body
-     * @return Modello della tabella con i dati inseriti
+	 * Crea il Model di una tabella, contenente tutti i dati relativi al Body
+     * @return il Model della tabella con i dati inseriti
      */
     public DefaultTableModel printBodyTable(Bodroot engNames)
 	{
@@ -355,8 +350,8 @@ public class Bodroot
 	}
     
     /**
-     * Metodo che crea il modello di una tabella in cui il campo AroundPlanet e' vuoto, contenente il nome dei Body (solitamente di tipo Planet)
-     * @return Modello della tabella con i dati inseriti
+     * Crea il Model di una tabella in cui il campo AroundPlanet e' vuoto, contenente il nome dei Body (solitamente di tipo Planet)
+     * @return il Model della tabella con i dati inseriti
      */
     public DefaultTableModel printBodiesList()
    	{
@@ -373,9 +368,9 @@ public class Bodroot
    	}
     
     /**
-     * Metodo che crea il modello di una tabella, contenente il nome dei Body di tipo Moon e attorno a quale Body ruotano
+     * Crea il Model di una tabella, contenente il nome dei Body di tipo Moon e attorno a quale Body ruotano
      * @param englishNames Nomi inglesi dei Body che possiedono Moons (solitamente di tipo Planet)
-     * @return Modello della tabella con i dati inseriti
+     * @return il Model della tabella con i dati inseriti
      */
     public DefaultTableModel printBodiesList(Bodroot englishNames)
 	{
@@ -406,9 +401,9 @@ public class Bodroot
     
     
     /**
-     * Metodo che trasforma una stringa contenente un numero in una stringa contenente un esponente
+     * Trasforma una stringa contenente un numero in una stringa contenente un esponente
      * @param num Stringa da trasformare
-     * @return Stringa contenente il corrispondente esponente
+     * @return una Stringa contenente il corrispondente esponente
      */
     private String exponentize(String num)
     {

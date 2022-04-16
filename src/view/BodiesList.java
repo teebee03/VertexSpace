@@ -20,7 +20,12 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-
+/**
+ * Crea un pannello che permette di visualizzare la lista dei Body di un preciso tipo
+ * @author Alberti Lorenzo, Bertelli Tommaso
+ * @version 1.0.0
+ * @since 1.0
+ */
 public class BodiesList extends JPanel 
 {
 	
@@ -33,6 +38,7 @@ public class BodiesList extends JPanel
 	private JLabel lblAroundPlanet;
 	private JLabel lblBody;
 	private JLabel lblSearch;
+	
 
 	/**
 	 * Create the panel.
@@ -41,7 +47,7 @@ public class BodiesList extends JPanel
 	{
 		URL imageUrlBg=ClassLoader.getSystemResource("images/spaceBg.jpg");
 		img=Toolkit.getDefaultToolkit().createImage(imageUrlBg);
-		this.loadImage(img);
+		UsefulMethods.loadImage(img,this);
 		setBounds(0, 0, 1170, 861);
 		setLayout(null);
 		
@@ -74,16 +80,7 @@ public class BodiesList extends JPanel
 		scrollPane.getViewport().setOpaque(false);
 		scrollPane.setOpaque(false);
 		
-		URL imageUrl=ClassLoader.getSystemResource("images/back.png");
-		Icon icon = new ImageIcon(imageUrl);
-		btnBack = new JButton(icon);
-		btnBack.setForeground(Color.WHITE);
-		btnBack.setFont(new Font("Times New Roman", Font.BOLD, 99));
-		btnBack.setFocusPainted(false);
-		btnBack.setContentAreaFilled(false);
-		btnBack.setBorder(null);
-		btnBack.setBackground(Color.BLACK);
-		btnBack.setBounds(39, 734, 126, 90);
+		btnBack=UsefulMethods.backButton();
 		add(btnBack);	
 		
 		searchBodyField = new JTextField();
@@ -104,15 +101,15 @@ public class BodiesList extends JPanel
 		lblBody = new JLabel("Body:");
 		lblBody.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblBody.setForeground(Color.ORANGE);
-		lblBody.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblBody.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblBody.setBounds(818, 760, 100, 24);
 		add(lblBody);
 		
 		lblAroundPlanet = new JLabel("Around Planet:");
 		lblAroundPlanet.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAroundPlanet.setForeground(Color.ORANGE);
-		lblAroundPlanet.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblAroundPlanet.setBounds(818, 798, 100, 24);
+		lblAroundPlanet.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblAroundPlanet.setBounds(797, 798, 121, 24);
 		lblAroundPlanet.setVisible(false);
 		add(lblAroundPlanet);
 		
@@ -180,21 +177,8 @@ public class BodiesList extends JPanel
 	public void setLblBody(JLabel lblBody) {
 		this.lblBody = lblBody;
 	}
-
-	private void loadImage(Image img)
-	{
-	    try
-	    {
-	      MediaTracker track = new MediaTracker(this);
-	      track.addImage(img, 0);
-	      track.waitForID(0);
-	    }
-	    catch (InterruptedException e)
-	    {
-	      e.printStackTrace();
-	    }
-	 }
 	
+	@Override
 	protected void paintComponent(Graphics g)
 	{
 	    setOpaque(false);
