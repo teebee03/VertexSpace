@@ -65,8 +65,8 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 			{
 				urlB="?filter[]=bodyType,eq,Star";
 				bodiesReq=api.makeBodies(urlB);
+				f.getBd().getTableBodyDesc().setModel(bodiesReq.printBodyTable());
 			}
-			f.getBd().getTableBodyDesc().setModel(bodiesReq.printBodyTable());
 			try
 			{
 				URL imageUrl=ClassLoader.getSystemResource("images/planets/"+bodiesReq.getBodies().get(0).getEnglishName()+".png");
@@ -74,93 +74,32 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 				f.getBd().getLblBodyImage().setIcon(icon);
 			}
 			catch(NullPointerException ex)
-			{}
+			{
+				ex.printStackTrace();
+			}
 			f.getBd().setVisible(true);
 		}
 		
 		if(e.getSource()==f.getBs().getBtnDwarfPlanets()) //da Bs a Bl (dwarf planets)
 		{
-			f.getBs().setVisible(false);
-			if(urlB!="?filter[]=bodyType,eq,Dwarf%20Planet&data=id,englishName,bodyType")
-			{
-				urlB="?filter[]=bodyType,eq,Dwarf%20Planet&data=id,englishName,bodyType";
-				bodiesReq=api.makeBodies(urlB);
-				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesList());
-				f.getBl().getTableOfBodies().removeColumn(f.getBl().getTableOfBodies().getColumnModel().getColumn(0));
-			}
-			TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfBodies().getModel());
-			f.getBl().getTableOfBodies().setRowSorter(ts);
-			f.getBl().setVisible(true);
+			goToBodiesList("Dwarf%20Planet");
 		}
 		
 		if(e.getSource()==f.getBs().getBtnComets()) //da Bs a Bl (comets)
 		{
-			f.getBs().setVisible(false);
-			if(urlB!="?filter[]=bodyType,eq,Comet&data=id,englishName,bodyType")
-			{
-				urlB="?filter[]=bodyType,eq,Comet&data=id,englishName,bodyType";
-				bodiesReq=api.makeBodies(urlB);
-				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesList());
-				f.getBl().getTableOfBodies().removeColumn(f.getBl().getTableOfBodies().getColumnModel().getColumn(0));
-			}
-			TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfBodies().getModel());
-			f.getBl().getTableOfBodies().setRowSorter(ts);
-			f.getBl().setVisible(true);
+			goToBodiesList("Comet");
 		}
 		
 		if(e.getSource()==f.getBs().getBtnAsteroids()) //da Bs a Bl (asteroid)
 		{
-			f.getBs().setVisible(false);
-			if(urlB!="?filter[]=bodyType,eq,Asteroid&data=id,englishName,bodyType")
-			{
-				urlB="?filter[]=bodyType,eq,Asteroid&data=id,englishName,bodyType";
-				bodiesReq=api.makeBodies(urlB);
-				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesList());
-				f.getBl().getTableOfBodies().removeColumn(f.getBl().getTableOfBodies().getColumnModel().getColumn(0));
-			}
-			TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfBodies().getModel());
-			f.getBl().getTableOfBodies().setRowSorter(ts);
-			f.getBl().setVisible(true);
+			goToBodiesList("Asteroid");
 		}
 		
 		if(e.getSource()==f.getBs().getBtnMoons()) //da Bs a Bl (moons)
 		{
-			f.getBs().setVisible(false);
-			if(urlB!="?filter[]=bodyType,eq,Moon&data=id,englishName,aroundPlanet,planet,rel,bodyType")
-			{
-				urlB="?filter[]=bodyType,eq,Moon&data=id,englishName,aroundPlanet,planet,rel,bodyType";
-				bodiesReq=api.makeBodies(urlB);
-				
-				String link="?filter[]=isPlanet,eq,true&data=id,englishName";
-				Bodroot engNames = api.makeBodies(link);
-				String aroundPlanet="";
-				for(int i=0;i<bodiesReq.getBodies().size();i++)
-				{
-					aroundPlanet = ""+((JAXBElement)bodiesReq.getBodies().get(i).getAroundPlanet().getContent().get(0)).getValue();
-					
-					Boolean flag=false;
-					int j=0;
-					while(j<engNames.getBodies().size() && !flag)
-					{
-						if(engNames.getBodies().get(j).getId().equals(aroundPlanet))
-							flag=true;
-						else
-							j++;
-					}
-					if(!flag)
-					{
-						Bodroot req=api.makeBodies(aroundPlanet+"?data=id,englishName");
-						engNames.getBodies().add(req.getBodies().get(0));
-					}
-				}
-				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesList(engNames));
-				f.getBl().getTableOfBodies().removeColumn(f.getBl().getTableOfBodies().getColumnModel().getColumn(0));
-			}
-			TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfBodies().getModel());
-			f.getBl().getTableOfBodies().setRowSorter(ts);
+			goToBodiesList("Moon");
+			f.getBl().getSearchArField().setVisible(true);
 			f.getBl().getLblAroundPlanet().setVisible(true);
-			f.getBl().getSearchArField().setVisible(true);		
-			f.getBl().setVisible(true);
 		}
 		
 		if(e.getSource()==f.getBs().getBtnPlanets()) //da Bs a Ps (planets)
@@ -171,7 +110,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 				urlB="?filter[]=isPlanet,eq,true&order=aphelion&data=id,englishName,isPlanet,bodyType";
 				bodiesReq=api.makeBodies(urlB);
 			}
-			ButtonImageText(bodiesReq,currI);
+			ButtonImageText();
 			f.getPs().setVisible(true);
 		}
 		
@@ -181,12 +120,12 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 			if(currI<bodiesReq.getBodies().size()-1)
 			{
 				currI++;
-				ButtonImageText(bodiesReq,currI);
+				ButtonImageText();
 			}
 			else
 			{
 				currI=0;
-				ButtonImageText(bodiesReq,currI);
+				ButtonImageText();
 			}
 		}
 		
@@ -195,12 +134,12 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 			if(currI>0)
 			{
 				currI--;
-				ButtonImageText(bodiesReq,currI);
+				ButtonImageText();
 			}
 			else
 			{
 				currI=bodiesReq.getBodies().size()-1;
-				ButtonImageText(bodiesReq,currI);
+				ButtonImageText();
 			}
 		}
 		
@@ -219,15 +158,8 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 			Icon icon = new ImageIcon(imageUrl);
 			f.getBd().getLblBodyImage().setIcon(icon);
 			Bodroot body=api.makeBodies(currPlanetName.getId());
-			
-			//count moons
-			Bodroot moons =api.makeBodies("?filter[]=bodyType,eq,Moon&data=id,englishName,aroundPlanet,planet");
-			int counter =0;
-			for (int i = 0; i < moons.getBodies().size(); i++) 
-			{
-				if (body.getBodies().get(0).getId().equals(((JAXBElement)moons.getBodies().get(i).getAroundPlanet().getContent().get(0)).getValue()))
-					counter++;
-			}
+
+			int counter = countMoons(body);
 			
 			DefaultTableModel model = body.printBodyTable();
 			model.insertRow(1,new String[]{"Moons:",""+counter} );
@@ -263,12 +195,92 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 		}
 	}
 	
-	private void ButtonImageText(Bodroot planets,int currI)
+	/**
+	 * Crea un Bodroot con tutti i nomi inglesi dei Body attorno a cui ruotano le Moon da visualizzare
+	 * @return i nomi inglesi dei Body attorno a cui ruotano le Moon da visualizzare
+	 */
+	private Bodroot makeEngNames()
 	{
-		URL imageUrl=ClassLoader.getSystemResource("images/planets/"+planets.getBodies().get(currI).getEnglishName()+".png");
+		String link="?filter[]=isPlanet,eq,true&data=id,englishName"; //solitamente ruota attorno a un Body pianeta
+		Bodroot engNames = api.makeBodies(link); //inizia inserendoci i pianeti
+		String aroundPlanet;
+		Boolean flag;
+		for(int i=0;i<bodiesReq.getBodies().size();i++) //per ogni Moon
+		{
+			aroundPlanet = ""+((JAXBElement)bodiesReq.getBodies().get(i).getAroundPlanet().getContent().get(0)).getValue();
+			
+			flag=false;
+			int j=0;
+			while(j<engNames.getBodies().size() && !flag) //per ogni Body attorno a cui potrebbe ruotare
+			{
+				if(engNames.getBodies().get(j).getId().equals(aroundPlanet)) //controlla se ruota attorno al pianeta j
+					flag=true;
+				else
+					j++;
+			}
+			if(!flag) //se non ruota attorno a un Body non presente nella lista
+			{
+				Bodroot notPlanet=api.makeBodies(aroundPlanet+"?data=id,englishName");
+				engNames.getBodies().add(notPlanet.getBodies().get(0)); //aggiunge il Body, che non e' un pianeta, alla lista
+			}
+		}
+		return engNames;
+	}
+	
+	/**
+	 * Passa dal pannello con i bottoni di scelta del tipo di Body (BodiesSelection) a quello con la lista dei Body del tipo scelto (BodiesList)
+	 * @param bodyType Tipo di Body scelto
+	 */
+	private void goToBodiesList(String bodyType)
+	{
+		f.getBs().setVisible(false);
+		
+		if(!urlB.equals("?filter[]=bodyType,eq,"+bodyType+"&data=id,englishName,aroundPlanet,planet,rel,bodyType"))
+		{
+			urlB="?filter[]=bodyType,eq,"+bodyType+"&data=id,englishName,aroundPlanet,planet,rel,bodyType";
+			bodiesReq=api.makeBodies(urlB);
+			if(bodyType.equals("Moon"))
+			{
+				Bodroot engNames = makeEngNames();
+				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesList(engNames));
+			}
+			else
+			{
+				f.getBl().getTableOfBodies().setModel(bodiesReq.printBodiesList());
+			}
+			f.getBl().getTableOfBodies().removeColumn(f.getBl().getTableOfBodies().getColumnModel().getColumn(0));
+		}
+		TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfBodies().getModel());
+		f.getBl().getTableOfBodies().setRowSorter(ts);
+		f.getBl().setVisible(true);
+	}
+	
+	/**
+	 * Imposta il testo e l'icona di un bottone
+	 */
+	private void ButtonImageText()
+	{
+		URL imageUrl=ClassLoader.getSystemResource("images/planets/"+bodiesReq.getBodies().get(currI).getEnglishName()+".png");
 		Icon icon = new ImageIcon(imageUrl);
 		f.getPs().getBtnPlanet().setIcon(icon);
-		f.getPs().getBtnPlanet().setText(planets.getBodies().get(currI).getEnglishName());
+		f.getPs().getBtnPlanet().setText(bodiesReq.getBodies().get(currI).getEnglishName());
+	}
+	
+	/**
+	 * Conta le Moon del Body fornito
+	 * @param body Body di cui contare le Moon
+	 * @return il numero di Moon del Body
+	 */
+	private int countMoons(Bodroot body)
+	{
+		Bodroot moons = api.makeBodies("?filter[]=bodyType,eq,Moon&data=id,englishName,aroundPlanet,planet");
+		int counter = 0;
+		for (int i = 0; i < moons.getBodies().size(); i++) 
+		{
+			if (body.getBodies().get(0).getId().equals(((JAXBElement)moons.getBodies().get(i).getAroundPlanet().getContent().get(0)).getValue()))
+				counter++;
+		}
+		return counter;
 	}
 
 	@Override
@@ -282,7 +294,6 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 			{
 				int row = f.getBl().getTableOfBodies().getRowSorter().convertRowIndexToModel(rowF);
 				f.getBl().setVisible(false);
-				f.getBd().getLblBodyImage().setIcon(null);
 				urlB = ""+f.getBl().getTableOfBodies().getModel().getValueAt(row, 0);
 				bodiesReq=api.makeBodies(urlB);
 				URL imageUrl=null;
@@ -299,14 +310,9 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 				catch(NullPointerException ex)
 				{
 					if(bodiesReq.getBodies().get(0).getBodyType().equals("Asteroid"))
-					{
 						imageUrl=ClassLoader.getSystemResource("images/planets/asteroidImage.png");
-					}
 					else 
-					{
-						//change moon default image
 						imageUrl=ClassLoader.getSystemResource("images/planets/moonImage.png");
-					}
 					Icon icon = new ImageIcon(imageUrl);
 					f.getBd().getLblBodyImage().setIcon(icon);
 						
