@@ -256,7 +256,7 @@ public class Bodroot
 				}
 				else
 					value = ""+fields[i].get(bodies.get(0));
-				System.out.println(value+" - ");
+				
 				if(!value.equals(""))
 				{
 					value += units.get(i);
