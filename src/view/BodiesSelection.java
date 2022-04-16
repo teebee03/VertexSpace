@@ -56,22 +56,22 @@ public class BodiesSelection extends JPanel
 		
 		UIManager.put("Button.select", Color.TRANSLUCENT);
 		
-		btnPlanets = createButton("Planets","mars",18);
+		btnPlanets = createButton("Planets","Mars",18);
 		gridPanel.add(btnPlanets);
 		
-		btnMoons = createButton("Moons","moon",18);
+		btnMoons = createButton("Moons","Moon",18);
 		gridPanel.add(btnMoons);
 		
-		btnDwarfPlanets = createButton("Dwarf Planets","pluto",16);
+		btnDwarfPlanets = createButton("Dwarf Planets","Pluto",16);
 		gridPanel.add(btnDwarfPlanets);
 		
-		btnAsteroids = createButton("Asteroids","asteroid",18);
+		btnAsteroids = createButton("Asteroids","Asteroid",18);
 		gridPanel.add(btnAsteroids);
 		
-		btnComets = createButton("Comets","comet hyakutake",18);
+		btnComets = createButton("Comets","Comet Hyakutake",18);
 		gridPanel.add(btnComets);
 		
-		btnStars = createButton("Stars","sun",18);
+		btnStars = createButton("Stars","Sun",18);
 		gridPanel.add(btnStars);
 	}
 
