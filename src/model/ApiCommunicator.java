@@ -1,11 +1,13 @@
 package model;
+import java.io.BufferedReader;
 import java.io.File;
 
 import java.io.FileWriter;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -39,14 +41,22 @@ public class ApiCommunicator
 		Bodroot bod = new Bodroot();
 		try 
 		{
-			//richieste all'api
-			HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(urlA)).header("accept", "application/json").build();
-			HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
-			HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-			
-			String responseString = "";
-			if (response.statusCode() == 200) 
-				responseString = response.body();
+			URL url = new URL(urlA);  
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection( );   
+	        conn.setRequestMethod("GET");
+	        conn.setRequestProperty("Content-length", "0");
+	        conn.setUseCaches(false);
+	        conn.setAllowUserInteraction(false);
+	        conn.setConnectTimeout(10000);
+	        conn.setReadTimeout(10000);
+	        conn.connect();
+	        
+	        String responseString=""; 
+			if (conn.getResponseCode()==200) 
+			{
+				InputStream response = conn.getInputStream();
+				responseString = convertStreamToString(response);
+			}
 			else
 				System.out.println("Error 200");
 			
@@ -77,5 +87,42 @@ public class ApiCommunicator
 			e.printStackTrace();
 		}
 		return bod;
+	}
+	
+	/**
+	 * Converte un InputStream in una stringa
+	 * @param is InputStream da convertire
+	 * @return la stringa ottenuta dalla conversione
+	 */
+	private static String convertStreamToString(InputStream is)
+	{
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+		StringBuilder sb = new StringBuilder();
+
+		String line = null;
+		try
+		{
+		    while ((line = reader.readLine()) != null)
+		    {
+		        sb.append(line + "\n");
+		    }
+		}
+		catch (IOException e)
+		{
+		    e.printStackTrace();
+		}
+		finally
+		{
+		    try
+		    {
+		        is.close();
+		    }
+		    catch (IOException e)
+		    {
+		        e.printStackTrace();
+		    }
+		}
+		return sb.toString();
 	}
 }
