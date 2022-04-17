@@ -11,6 +11,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import javax.xml.bind.JAXBElement;
 
@@ -199,6 +200,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 	 * Crea un Bodroot con tutti i nomi inglesi dei Body attorno a cui ruotano le Moon da visualizzare
 	 * @return i nomi inglesi dei Body attorno a cui ruotano le Moon da visualizzare
 	 */
+	@SuppressWarnings("unchecked")
 	private Bodroot makeEngNames()
 	{
 		String link="?filter[]=isPlanet,eq,true&data=id,englishName"; //solitamente ruota attorno a un Body pianeta
@@ -207,7 +209,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 		Boolean flag;
 		for(int i=0;i<bodiesReq.getBodies().size();i++) //per ogni Moon
 		{
-			aroundPlanet = ""+((JAXBElement)bodiesReq.getBodies().get(i).getAroundPlanet().getContent().get(0)).getValue();
+			aroundPlanet = ""+((JAXBElement<String>)bodiesReq.getBodies().get(i).getAroundPlanet().getContent().get(0)).getValue();
 			
 			flag=false;
 			int j=0;
@@ -250,7 +252,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 			}
 			f.getBl().getTableOfBodies().removeColumn(f.getBl().getTableOfBodies().getColumnModel().getColumn(0));
 		}
-		TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfBodies().getModel());
+		TableRowSorter<TableModel> ts=new TableRowSorter<TableModel>(f.getBl().getTableOfBodies().getModel());
 		f.getBl().getTableOfBodies().setRowSorter(ts);
 		f.getBl().setVisible(true);
 	}
@@ -271,18 +273,20 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 	 * @param body Body di cui contare le Moon
 	 * @return il numero di Moon del Body
 	 */
+	@SuppressWarnings("unchecked")
 	private int countMoons(Bodroot body)
 	{
 		Bodroot moons = api.makeBodies("?filter[]=bodyType,eq,Moon&data=id,englishName,aroundPlanet,planet");
 		int counter = 0;
 		for (int i = 0; i < moons.getBodies().size(); i++) 
 		{
-			if (body.getBodies().get(0).getId().equals(((JAXBElement)moons.getBodies().get(i).getAroundPlanet().getContent().get(0)).getValue()))
+			if (body.getBodies().get(0).getId().equals(((JAXBElement<String>)moons.getBodies().get(i).getAroundPlanet().getContent().get(0)).getValue()))
 				counter++;
 		}
 		return counter;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void valueChanged(ListSelectionEvent e)
 	{
@@ -320,7 +324,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 				
 				if(bodiesReq.getBodies().get(0).getAroundPlanet().getContent().size() !=1)
 				{
-					String link=""+((JAXBElement)bodiesReq.getBodies().get(0).getAroundPlanet().getContent().get(0)).getValue();
+					String link=""+((JAXBElement<String>)bodiesReq.getBodies().get(0).getAroundPlanet().getContent().get(0)).getValue();
 					Bodroot engNames=api.makeBodies(link+"?data=id,englishName");
 					f.getBd().getTableBodyDesc().setModel(bodiesReq.printBodyTable(engNames));
 				}
@@ -356,7 +360,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 				Bodroot engNames = api.makeBodies(link);
 				f.getBl().getTableOfBodies().setModel(moons.printBodiesList(engNames));
 				f.getBl().getTableOfBodies().removeColumn(f.getBl().getTableOfBodies().getColumnModel().getColumn(0));
-				TableRowSorter ts=new TableRowSorter(f.getBl().getTableOfBodies().getModel());
+				TableRowSorter<TableModel> ts=new TableRowSorter<TableModel>(f.getBl().getTableOfBodies().getModel());
 				f.getBl().getTableOfBodies().setRowSorter(ts);
 				f.getBl().getLblAroundPlanet().setVisible(true);
 				f.getBl().getSearchArField().setVisible(true);		
@@ -365,6 +369,7 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void insertUpdate(DocumentEvent e)
 	{
@@ -375,11 +380,13 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 		{
 			searchTextB=f.getBl().getSearchBodyField().getText();
 			searchTextAr=f.getBl().getSearchArField().getText();
-			((TableRowSorter) f.getBl().getTableOfBodies().getRowSorter()).setRowFilter(new MyRowFilter(searchTextB,searchTextAr));
+			TableRowSorter<TableModel> rs=(TableRowSorter<TableModel>) f.getBl().getTableOfBodies().getRowSorter();
+			rs.setRowFilter(new MyRowFilter(searchTextB,searchTextAr));
 		}
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void removeUpdate(DocumentEvent e)
 	{
@@ -390,7 +397,8 @@ public class GestoreEventi implements ActionListener,ListSelectionListener,Docum
 		{
 			searchTextB=f.getBl().getSearchBodyField().getText();
 			searchTextAr=f.getBl().getSearchArField().getText();
-			((TableRowSorter) f.getBl().getTableOfBodies().getRowSorter()).setRowFilter(new MyRowFilter(searchTextB,searchTextAr));
+			TableRowSorter<TableModel> rs=(TableRowSorter<TableModel>) f.getBl().getTableOfBodies().getRowSorter();
+			rs.setRowFilter(new MyRowFilter(searchTextB,searchTextAr));
 		}
 	}
 

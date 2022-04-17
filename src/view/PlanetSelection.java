@@ -25,6 +25,7 @@ import java.awt.Toolkit;
 public class PlanetSelection extends JPanel
 {
 
+	private static final long serialVersionUID = 1L;
 	private Image img;
 	private JButton btnPlanet;
 	private JButton btnLeft;

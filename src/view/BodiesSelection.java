@@ -12,7 +12,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.awt.Font;
@@ -26,6 +25,7 @@ import java.awt.Font;
 public class BodiesSelection extends JPanel
 {
 
+	private static final long serialVersionUID = 1L;
 	private Image img;
 	private JPanel gridPanel;
 	private JButton btnPlanets;

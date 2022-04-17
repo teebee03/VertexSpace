@@ -16,6 +16,6 @@ public class MainSpace
 	{
 		Finestra f=new Finestra();
 		ApiCommunicator api=new ApiCommunicator();
-		GestoreEventi gest=new GestoreEventi(f,api);
+		new GestoreEventi(f,api);
 	}
 }

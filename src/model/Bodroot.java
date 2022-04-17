@@ -196,7 +196,8 @@ public class Bodroot
 	 * Crea il Model di una tabella in cui il campo AroundPlanet e' vuoto, contenente tutti i dati relativi al Body
      * @return il Model della tabella con i dati inseriti
      */
-    public DefaultTableModel printBodyTable()
+    @SuppressWarnings("unchecked")
+	public DefaultTableModel printBodyTable()
 	{
     	List<String >units = Arrays.asList(
     			new String[]
@@ -216,7 +217,7 @@ public class Bodroot
 		String field="";
 		String value="";
 		
-		for(int i=0;i<fields.length-4;i++)
+		for(int i=0; i<fields.length-4; i++)
 		{
 			try
 			{
@@ -230,27 +231,29 @@ public class Bodroot
 				{
 					if(fields[i].get(bodies.get(0)).getClass() == AroundPlanet.class)
 					{
-						
-						if(((AroundPlanet)fields[i].get(bodies.get(0))).getContent().size() != 1)
-							value = ""+((JAXBElement)((AroundPlanet)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
+						List<Serializable> aroundPlanet = ((AroundPlanet)fields[i].get(bodies.get(0))).getContent();
+						if(aroundPlanet.size() != 1)
+							value = ""+((JAXBElement<AroundPlanet>)((AroundPlanet)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
 						
 					}
 					else if(fields[i].get(bodies.get(0)).getClass() == Mass.class)
 					{
 						if(((Mass)fields[i].get(bodies.get(0))).getContent().size() != 1)
 						{
-							value = ""+((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(1)).getValue()
-									+" x 10"
-									+ exponentize(""+((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(0)).getValue());
+							List<Serializable> mass = ((Mass)fields[i].get(bodies.get(0))).getContent();
+							value = ""+((JAXBElement<Mass>)mass.get(1)).getValue()
+									+ " x 10"
+									+ exponentize(""+((JAXBElement<Mass>)mass.get(0)).getValue());
 						}
 					}
 					else if(fields[i].get(bodies.get(0)).getClass() == Vol.class)
 					{
 						if(((Vol)fields[i].get(bodies.get(0))).getContent().size() != 1)
 						{
-							value = ""+((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(0)).getValue()
-									+" x 10"
-									+ exponentize(""+((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(1)).getValue());
+							List<Serializable> vol = ((Vol)fields[i].get(bodies.get(0))).getContent();
+							value = ""+((JAXBElement<Vol>)vol.get(0)).getValue()
+									+ " x 10"
+									+ exponentize(""+((JAXBElement<Vol>)vol.get(1)).getValue());
 						}
 					}
 				}
@@ -275,7 +278,8 @@ public class Bodroot
 	 * Crea il Model di una tabella, contenente tutti i dati relativi al Body
      * @return il Model della tabella con i dati inseriti
      */
-    public DefaultTableModel printBodyTable(Bodroot engNames)
+    @SuppressWarnings("unchecked")
+	public DefaultTableModel printBodyTable(Bodroot engNames)
 	{
     	List<String >units = Arrays.asList(
     			new String[]
@@ -308,8 +312,8 @@ public class Bodroot
 				{
 					if(fields[i].get(bodies.get(0)).getClass() == AroundPlanet.class)
 					{
-						
-						if(((AroundPlanet)fields[i].get(bodies.get(0))).getContent().size() != 1)
+						List<Serializable> aroundPlanet = ((AroundPlanet)fields[i].get(bodies.get(0))).getContent();
+						if(aroundPlanet.size() != 1)
 							value = engNames.bodies.get(0).englishName;
 						
 					}
@@ -317,18 +321,20 @@ public class Bodroot
 					{
 						if(((Mass)fields[i].get(bodies.get(0))).getContent().size() != 1)
 						{
-							value = ""+((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(1)).getValue()
-									+" x 10"
-									+ exponentize(""+((JAXBElement)((Mass)fields[i].get(bodies.get(0))).getContent().get(0)).getValue());
+							List<Serializable> mass = ((Mass)fields[i].get(bodies.get(0))).getContent();
+							value = ""+((JAXBElement<Mass>)mass.get(1)).getValue()
+									+ " x 10"
+									+ exponentize(""+((JAXBElement<Mass>)mass.get(0)).getValue());
 						}
 					}
 					else if(fields[i].get(bodies.get(0)).getClass() == Vol.class)
 					{
 						if(((Vol)fields[i].get(bodies.get(0))).getContent().size() != 1)
 						{
-							value = ""+((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(0)).getValue()
-									+" x 10"
-									+ exponentize(""+((JAXBElement)((Vol)fields[i].get(bodies.get(0))).getContent().get(1)).getValue());
+							List<Serializable> vol = ((Vol)fields[i].get(bodies.get(0))).getContent();
+							value = ""+((JAXBElement<Vol>)vol.get(0)).getValue()
+									+ " x 10"
+									+ exponentize(""+((JAXBElement<Vol>)vol.get(1)).getValue());
 						}
 					}
 				}
@@ -372,21 +378,22 @@ public class Bodroot
      * @param englishNames Nomi inglesi dei Body che possiedono Moons (solitamente di tipo Planet)
      * @return il Model della tabella con i dati inseriti
      */
-    public DefaultTableModel printBodiesList(Bodroot englishNames)
+    @SuppressWarnings("unchecked")
+	public DefaultTableModel printBodiesList(Bodroot englishNames)
 	{
 		DefaultTableModel model=new DefaultTableModel();
 		model.addColumn("Id");
 		model.addColumn("Name");
 		model.addColumn("Around Planet");
 
-		for(int i=0;i<bodies.size();i++)
+		for(int i=0; i<bodies.size(); i++)
 		{
 			int j=0;
 			String engName="";
 			Boolean flag=false;
 			while(j<englishNames.bodies.size() && !flag)
 			{
-				if(((JAXBElement)bodies.get(i).getAroundPlanet().getContent().get(0)).getValue().equals(englishNames.bodies.get(j).getId()))
+				if(((JAXBElement<String>)bodies.get(i).getAroundPlanet().getContent().get(0)).getValue().equals(englishNames.bodies.get(j).getId()))
 					flag=true;
 				else
 					j++;

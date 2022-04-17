@@ -11,11 +11,13 @@ import java.awt.Color;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.util.Locale;
 import java.awt.BorderLayout;
 
 public class Finestra extends JFrame implements WindowListener
 {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private FirstPage fp;
 	private BodiesSelection bs;
@@ -146,6 +148,7 @@ public class Finestra extends JFrame implements WindowListener
 	@Override
 	public void windowClosing(WindowEvent e)
 	{
+		JOptionPane.setDefaultLocale(new Locale("en","US"));
 		int check=JOptionPane.showConfirmDialog(this,"Are you sure you want to exit?","Confirm Exit",JOptionPane.YES_NO_OPTION);
 		if(check==JOptionPane.YES_OPTION)
 		{

@@ -1,6 +1,7 @@
 package control;
 
 import javax.swing.RowFilter;
+import javax.swing.table.TableModel;
 
 /**
  * Crea un filtro per tabelle che controlla se il testo dato in input corrisponde al contenuto delle Entry della tabella
@@ -8,7 +9,7 @@ import javax.swing.RowFilter;
  * @version 1.0.0
  * @since 1.0
  */
-public class MyRowFilter extends RowFilter
+public class MyRowFilter extends RowFilter<TableModel, Integer>
 {
 	private String filterTextB;
 	private String filterTextAr;
@@ -21,7 +22,7 @@ public class MyRowFilter extends RowFilter
 	}
 
 	@Override
-	public boolean include(Entry entry)
+	public boolean include(Entry<? extends TableModel, ? extends Integer> entry)
 	{
 		if(entry.getValueCount()==3)
 			return entry.getStringValue(1).indexOf(filterTextB) >= 0 && entry.getStringValue(2).indexOf(filterTextAr) >= 0;

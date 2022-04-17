@@ -8,12 +8,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.JScrollPane;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.net.URL;
 import javax.swing.JButton;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -29,6 +26,7 @@ import javax.swing.SwingConstants;
 public class BodiesList extends JPanel 
 {
 	
+	private static final long serialVersionUID = 1L;
 	private Image img;
 	private JScrollPane scrollPane;
 	private JTable tableOfBodies;
