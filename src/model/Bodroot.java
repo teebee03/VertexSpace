@@ -233,7 +233,7 @@ public class Bodroot
 					{
 						List<Serializable> aroundPlanet = ((AroundPlanet)fields[i].get(bodies.get(0))).getContent();
 						if(aroundPlanet.size() != 1)
-							value = ""+((JAXBElement<AroundPlanet>)((AroundPlanet)fields[i].get(bodies.get(0))).getContent().get(0)).getValue();
+							value = ""+((JAXBElement<AroundPlanet>)aroundPlanet.get(0)).getValue();
 						
 					}
 					else if(fields[i].get(bodies.get(0)).getClass() == Mass.class)
