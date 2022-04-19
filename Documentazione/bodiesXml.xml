@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<bodroot>
+	<alternativeName/>
+	<aphelion>249200000</aphelion>
+	<argPeriapsis>286.231</argPeriapsis>
+	<aroundPlanet null="true"/>
+	<avgTemp>210</avgTemp>
+	<axialTilt>25.19</axialTilt>
+	<bodyType>Planet</bodyType>
+	<density>3.9341</density>
+	<dimension/>
+	<discoveredBy/>
+	<discoveryDate/>
+	<eccentricity>0.0935</eccentricity>
+	<englishName>Mars</englishName>
+	<equaRadius>3396.19</equaRadius>
+	<escape>5030.0</escape>
+	<flattening>0.00589</flattening>
+	<gravity>3.71</gravity>
+	<id>mars</id>
+	<inclination>1.85</inclination>
+	<isPlanet>true</isPlanet>
+	<longAscNode>49.667</longAscNode>
+	<mainAnomaly>19.412</mainAnomaly>
+	<mass>
+		<massExponent>23</massExponent>
+		<massValue>6.41712</massValue>
+	</mass>
+	<meanRadius>3389.5</meanRadius>
+	<moons>
+		<element>
+			<moon>Phobos</moon>
+			<rel>https://api.le-systeme-solaire.net/rest/bodies/phobos</rel>
+		</element>
+		<element>
+			<moon>Deïmos</moon>
+			<rel>https://api.le-systeme-solaire.net/rest/bodies/deimos</rel>
+		</element>
+	</moons>
+	<name>Mars</name>
+	<perihelion>206700000</perihelion>
+	<polarRadius>3376.2</polarRadius>
+	<semimajorAxis>227939200</semimajorAxis>
+	<sideralOrbit>686.98</sideralOrbit>
+	<sideralRotation>24.6229</sideralRotation>
+	<vol>
+		<volExponent>11</volExponent>
+		<volValue>1.6318</volValue>
+	</vol>
+</bodroot>
