@@ -26,8 +26,8 @@ public class ApiCommunicator
 	public ApiCommunicator(){}
 	
 	/***
-	 * Permette di inviare richieste all'api e ottenere l'oggetto richiesto facendo la conversione da json ad xml e la sucessiva
-	 * conversione ad oggetto
+	 * Riceve un file JSON come risultato del URL con cui si è fatta la richiesta e lo converte in un file XML su
+	 * cui è possibile eseguire l’unmarshalling, che produce un oggetto di tipo Bodroot
 	 * 
 	 * @param urlB Stringa contenente il nome del Body per cui filtrare la richiesta all'api, con possibili filtri
 	 * @return un oggetto Bodroot contenente i Bodies con i dati richiesti all'API
